@@ -11,7 +11,7 @@ main .form-control
     display: inline-block;
 
     /* override Bootstrap's 100% width for form controls */
-    width: auto;
+    width: 50%;
 }
 
 main

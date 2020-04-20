@@ -67,7 +67,7 @@ def create():
         url = request.form.get('url')
         title = request.form.get('title')
         description = request.form.get('description')
-        db.execute('insert into resources(id, url, title, description) values(?,?,?,?)', 
+        db.execute('insert into resources(user_id, url, title, description) values(?,?,?,?)', 
                            session['user_id'], url, title, description)
         return redirect('/')
     else:
