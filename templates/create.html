@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block main %}
+<form action="/create" method="post" onsubmit="">
+    <div class="form-group">
+        <input autocomplete="off" autofocus class="form-control" 
+        name="url" placeholder="(paste URL)" type="text"
+        required onchange="checkURL();">
+    </div>
+    <div class="form-group">
+        <input class="form-control" name="title" placeholder="title" 
+        type="text" required>
+    </div>
+    <div class="form-group">
+        <textarea class="form-control" rows="4"  name='description' 
+        placeholder = "description" id=""></textarea>
+    </div>
+    <button class="btn btn-primary" type="submit">Bookmark</button>
+</form>
+<script>
+    function getHTML(html){
+        //alert(html);
+        var elem = document.querySelector('input[name="title"]');
+        var doc = new DOMParser().parseFromString(html, 'text/html');
+        var title = doc.querySelector('title').innerHTML;
+        elem.value = title;
+        elem.focus();
+    };
+
+    function showError(xhr){
+        alert('Error:' + xhr.status + " " + xhr.statusText);
+    };
+
+    function checkURL(){
+        var urlStr = document.querySelector("input[name='url']").value;
+        try{
+            url = new URL(urlStr);
+            //alert(url);
+        }
+        catch(_){
+            alert('Invalid url');
+            return false;
+        }
+        if (url.protocol === 'http:' || url.protocol === 'https:')
+        {
+            $.ajax({
+               url: url, success: html => {getHTML(html);},
+                        error: xhr => {}
+            });
+        }
+        else return false;
+    }
+</script>
+{% endblock %}
