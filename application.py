@@ -5,8 +5,7 @@ from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
-
-from helpers import apology, login_required
+from helpers import apology, login_required, shorten_title
 
 # Configure application
 app = Flask(__name__)
@@ -58,7 +57,13 @@ db = SQL("sqlite:///database/cs50final.db")
 @app.route("/")
 @login_required
 def index():
-    return render_template('index.html')
+    rows = db.execute('''select url, title, description from resources
+                         where user_id = ?''', (session['user_id'],))
+    for row in rows:
+        row['short_title'] = shorten_title(row['title'])
+        row['tooltip'] = row['title'] + '\n' + row['url']
+    #print(rows)
+    return render_template('index.html', rows=rows)
 
 @app.route('/create', methods=["GET", "POST"])
 @login_required

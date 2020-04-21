@@ -5,6 +5,10 @@ nav .navbar-brand
 }
 
 
+form {
+    text-align: center;
+}
+
 main .form-control
 {
     /* center form controls */
@@ -12,6 +16,8 @@ main .form-control
 
     /* override Bootstrap's 100% width for form controls */
     width: 50%;
+
+    /* center contents */
 }
 
 main
@@ -19,8 +25,6 @@ main
     /* scroll horizontally as needed */
     overflow-x: auto;
 
-    /* center contents */
-    text-align: center;
 }
 
 main img
@@ -29,6 +33,28 @@ main img
     max-width: 100%;
 }
 
-th, td{
-    text-align: left;
+.resources{
+    font-size: small;
+    font-family: 'Times New Roman', Times, serif;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
+
+.resources li a{
+    display: inline-block;
+    text-decoration: none;
+    color: black;
+    padding: 1px 6px;
+    width: 175px;
+}
+
+.resources li a:hover{
+    color: white;
+    background-color: navy;
+}
+
+
+.tooltip-inner{
+    font-size: 10px;
+} 

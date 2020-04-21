@@ -5,5 +5,19 @@
 {% endblock %}
 
 {% block main %}
+    <ul class='resources'>
+        {% for row in rows %}
+            <li><a href="{{row['url']}}" target="_blank" data-toggle='tooltip'
+                title="{{row['tooltip']}}" data-placement='right'>
+                {{row['short_title']}}</a>
+            </li>
+        {% endfor %}
+    </ul>
 
+<script>
+    // initializes tooltips in bootstrap 4
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
 {% endblock %}
