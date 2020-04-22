@@ -53,6 +53,7 @@ db = SQL("sqlite:///database/cs50final.db")
 # enables foreign key constraints at runtime
 #db.execute('PRAGMA foreign_keys = ON')
 
+# initialize here just for testing
 categories = []
 
 @app.route("/")
@@ -61,6 +62,8 @@ categories = []
 # select resources for each category (use a global variable)
 # display in index.html using flexbox
 def index():
+    # right place to initialize categories
+    # categories = []
     bookmarks = []
     cat_names = db.execute('select cat_name from categories where user_id = ?', 
                 (session['user_id'],))
@@ -84,8 +87,8 @@ def index():
         dict['category'] = cat['cat_name']
         dict['rows'] = rows
         bookmarks.append(dict)
-    print(bookmarks)
-    return render_template('index.html', rows=bookmarks[0]['rows'])
+    #print(bookmarks)
+    return render_template('index.html', bookmarks=bookmarks)
 
 @app.route('/create', methods=["GET", "POST"])
 @login_required

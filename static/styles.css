@@ -41,6 +41,11 @@ main img
     padding: 0;
 }
 
+
+.book-item h5{
+    margin-left: 5px;
+}
+
 .resources li a{
     display: inline-block;
     text-decoration: none;
