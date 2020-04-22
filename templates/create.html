@@ -47,9 +47,10 @@
         }
         if (url.protocol === 'http:' || url.protocol === 'https:')
         {
-            $.ajax({url: url})
-            .done(html => {getHTML(html);})
-            .fail(xhr => {});
+            return true;
+            //$.ajax({url: url})
+            //.done(html => {getHTML(html);})
+            //.fail(xhr => {});
         }
         else return false;
     }

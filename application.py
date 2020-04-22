@@ -53,21 +53,48 @@ db = SQL("sqlite:///database/cs50final.db")
 # enables foreign key constraints at runtime
 #db.execute('PRAGMA foreign_keys = ON')
 
- 
+categories = []
+
 @app.route("/")
 @login_required
+# select categories for this user
+# select resources for each category (use a global variable)
+# display in index.html using flexbox
 def index():
-    rows = db.execute('''select url, title, description from resources
-                         where user_id = ?''', (session['user_id'],))
-    for row in rows:
-        row['short_title'] = shorten_title(row['title'])
-        row['tooltip'] = row['title'] + '\n' + row['url']
-    #print(rows)
-    return render_template('index.html', rows=rows)
+    bookmarks = []
+    cat_names = db.execute('select cat_name from categories where user_id = ?', 
+                (session['user_id'],))
+    for name in cat_names:
+        categories.append(name)
+    print(categories)
+
+    for cat in categories:
+        rows = db.execute('''select cat_name, title, url, description 
+                       from users, categories, bookmarks where 
+                       users.id = bookmarks.user_id and 
+                       bookmarks.categ_name=categories.cat_name  and 
+                       categories.cat_name = ? and users.id = ?''', 
+                       (cat['cat_name'], session['user_id']))
+     
+        for row in rows:
+            row['short_title'] = shorten_title(row['title'])
+            row['tooltip'] = row['title'] + '\n' + row['url']
+        #print(rows)
+        dict = {}
+        dict['category'] = cat['cat_name']
+        dict['rows'] = rows
+        bookmarks.append(dict)
+    print(bookmarks)
+    return render_template('index.html', rows=bookmarks[0]['rows'])
 
 @app.route('/create', methods=["GET", "POST"])
 @login_required
 def create():
+    # add input form for categories
+    # add a select menu from known categories
+    # insert category in input from select menu
+    # insert into resources (title, url, user_id)
+    # if new category: insert into categories(cat_name, user_id)
     if request.method == 'POST':
         url = request.form.get('url')
         title = request.form.get('title')

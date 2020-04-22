@@ -34,7 +34,7 @@ main img
 }
 
 .resources{
-    font-size: small;
+    font-size: 17px;
     font-family: 'Times New Roman', Times, serif;
     list-style-type: none;
     margin: 0;
@@ -46,7 +46,7 @@ main img
     text-decoration: none;
     color: black;
     padding: 1px 6px;
-    width: 175px;
+    width: 220px;
 }
 
 .resources li a:hover{
