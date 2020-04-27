@@ -54,7 +54,16 @@ db = SQL("sqlite:///database/cs50final.db")
 #db.execute('PRAGMA foreign_keys = ON')
 
 # initialize here just for testing
-categories = []
+#categories = []
+#CATS_LOADED = False
+
+def load_cats():
+    categories = []
+    cat_names = db.execute('select cat_name from categories where user_id = ?', 
+                (session['user_id'],))
+    for name in cat_names:
+        categories.append(name)
+    return True
 
 @app.route("/")
 @login_required
@@ -62,15 +71,13 @@ categories = []
 # select resources for each category (use a global variable)
 # display in index.html using flexbox
 def index():
-    # right place to initialize categories
-    # categories = []
     bookmarks = []
+    categories = []
     cat_names = db.execute('select cat_name from categories where user_id = ?', 
                 (session['user_id'],))
     for name in cat_names:
         categories.append(name)
     print(categories)
-
     for cat in categories:
         rows = db.execute('''select cat_name, title, url, description 
                        from users, categories, bookmarks where 
@@ -99,14 +106,24 @@ def create():
     # insert into resources (title, url, user_id)
     # if new category: insert into categories(cat_name, user_id)
     if request.method == 'POST':
+        category = request.form.get('category')
         url = request.form.get('url')
         title = request.form.get('title')
         description = request.form.get('description')
-        db.execute('insert into resources(user_id, url, title, description) values(?,?,?,?)', 
-                           session['user_id'], url, title, description)
+        db.execute('''insert into bookmarks(categ_name, user_id, url, title, description) 
+                   values(?,?,?,?,?)''',category, session['user_id'], url, title, description)
+        db.execute('insert into categories(cat_name, user_id) values(?,?)', 
+                    category, session['user_id'])
         return redirect('/')
     else:
-        return render_template('create.html')
+        categories = []
+        cat_names = db.execute('select cat_name from categories where user_id = ?', 
+                (session['user_id'],))
+        for name in cat_names:
+            categories.append(name)
+        listCats = list(map(lambda x: x['cat_name'], categories))
+        print(listCats)
+        return render_template('create.html', categories=listCats)
   
 @app.route("/check", methods=["GET"])
 def check():
