@@ -98,6 +98,11 @@ def index():
     #print(bookmarks)
     return render_template('index.html', bookmarks=bookmarks)
 
+@app.route('/rename', methods=['GET', 'POST'])
+@login_required
+def rename():
+    redirect('/')
+
 @app.route('/create', methods=["GET", "POST"])
 @login_required
 def create():
