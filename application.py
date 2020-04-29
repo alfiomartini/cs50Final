@@ -87,11 +87,12 @@ def index():
                        (cat['cat_name'], session['user_id']))
      
         for row in rows:
-            row['short_title'] = shorten_title(row['title'])
-            row['tooltip'] = row['title'] + '\n' + row['url']
+            row['short_title'] = shorten_title(row['title'], 25)
+            row['tooltip'] = 'Title: ' + row['title']  \
+                              + '\n' + 'Description: ' + row['description']
         #print(rows)
         dict = {}
-        dict['category'] = cat['cat_name']
+        dict['category'] = cat['cat_name'].lower()
         dict['rows'] = rows
         bookmarks.append(dict)
     #print(bookmarks)
@@ -105,6 +106,12 @@ def create():
     # insert category in input from select menu
     # insert into resources (title, url, user_id)
     # if new category: insert into categories(cat_name, user_id)
+    categories = []
+    cat_names = db.execute('select cat_name from categories where user_id = ?', 
+            (session['user_id'],))
+    for name in cat_names:
+        categories.append(name)
+    listCats = list(map(lambda x: x['cat_name'], categories))
     if request.method == 'POST':
         category = request.form.get('category')
         url = request.form.get('url')
@@ -112,17 +119,12 @@ def create():
         description = request.form.get('description')
         db.execute('''insert into bookmarks(categ_name, user_id, url, title, description) 
                    values(?,?,?,?,?)''',category, session['user_id'], url, title, description)
-        db.execute('insert into categories(cat_name, user_id) values(?,?)', 
+        if category not in listCats:
+            db.execute('insert into categories(cat_name, user_id) values(?,?)', 
                     category, session['user_id'])
         return redirect('/')
     else:
-        categories = []
-        cat_names = db.execute('select cat_name from categories where user_id = ?', 
-                (session['user_id'],))
-        for name in cat_names:
-            categories.append(name)
-        listCats = list(map(lambda x: x['cat_name'], categories))
-        print(listCats)
+        #print(listCats)
         return render_template('create.html', categories=listCats)
   
 @app.route("/check", methods=["GET"])

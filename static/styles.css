@@ -44,6 +44,9 @@ main img
 
 .book-item h5{
     margin-left: 5px;
+    font-variant: small-caps;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
 }
 
 .resources li a{
@@ -61,5 +64,7 @@ main img
 
 
 .tooltip-inner{
-    font-size: 10px;
+    font-size: 12px;
+    white-space: pre-wrap;
+    text-align: left;
 } 
