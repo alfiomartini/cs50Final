@@ -128,6 +128,7 @@ def edit():
         dict['rows'] = rows
         bookmarks.append(dict)
     #print(bookmarks)
+    flash('Select the bookmark you want to edit')
     return render_template('edit.html', bookmarks=bookmarks)
 
 @app.route('/edit_id/<string:id>', methods=['GET'])
@@ -144,7 +145,7 @@ def edit_id(id):
         categories.append(name)
     listCats = list(map(lambda x: x['cat_name'], categories))
     html =  render_template('edit_id.html', row=rows[0], categories=listCats)
-    print(html)
+    #print(html)
     return html
 
 @app.route('/apply', methods=['POST'])
@@ -160,6 +161,7 @@ def apply():
                       title = ?, url = ?, description = ? where id = ? ''',
                       category, session['user_id'], title, url, 
                       description, bookmark_id)
+        flash('Bookmark edited.')
         return redirect('/')
 
 @app.route('/create', methods=["GET", "POST"])
@@ -186,6 +188,7 @@ def create():
         if category not in listCats:
             db.execute('insert into categories(cat_name, user_id) values(?,?)', 
                     category, session['user_id'])
+        flash(f"Bookmark added to category {category}")
         return redirect('/')
     else:
         #print(listCats)
@@ -237,6 +240,7 @@ def login():
         session["user_id"] = rows[0]["id"]
 
         # Redirect user to home page
+        flash('You are now logged in')
         return redirect("/")
 
     # User reached route via GET (as by clicking a link or via redirect)
