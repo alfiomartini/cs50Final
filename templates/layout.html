@@ -34,14 +34,14 @@
                 {% if session.user_id %}
                     <ul class="navbar-nav mr-auto mt-2">
                         <li class="nav-item"><a class="nav-link" href="/create"
-                            data-toggle='tooltip' title="New Post" data-placement='right'>
+                            data-toggle='tooltip' title="New Bookmark" data-placement='bottom'>
                             New</a></li>
                         <li class="nav-item"><a class="nav-link" href="/change"
                             data-toggle='tooltip' title="Change Password" 
-                            data-placement='right'>Password</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/rename" 
-                            data-toggle='tooltip' title="Rename Category" 
-                            data-placement='right'>Rename</a></li>
+                            data-placement='bottom'>Password</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/edit" 
+                            data-toggle='tooltip' title="Edit Bookmarks" 
+                            data-placement='bottom'>Edit</a></li>
                     </ul>
                     <ul class="navbar-nav ml-auto mt-2">
                         <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
@@ -63,7 +63,7 @@
             </header>
         {% endif %}
 
-        <main class="container p-5">
+        <main class="container p-5" id="main">
             {% block main %}{% endblock %}
         </main>
     </body>

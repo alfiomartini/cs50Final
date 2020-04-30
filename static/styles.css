@@ -64,7 +64,7 @@ main img
 
 
 .tooltip-inner{
-    font-size: 12px;
+    font-size: 14px;
     white-space: pre-wrap;
-    text-align: left;
+    text-align: justify;
 } 

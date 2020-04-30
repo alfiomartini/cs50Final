@@ -77,19 +77,20 @@ def index():
                 (session['user_id'],))
     for name in cat_names:
         categories.append(name)
-    print(categories)
+    #print(categories)
     for cat in categories:
-        rows = db.execute('''select cat_name, title, url, description 
-                       from users, categories, bookmarks where 
-                       users.id = bookmarks.user_id and 
-                       bookmarks.categ_name=categories.cat_name  and 
-                       categories.cat_name = ? and users.id = ?''', 
+        rows = db.execute('''select bookmarks.id as bid, cat_name, title, url, description 
+                            from users, categories, bookmarks where 
+                            users.id = bookmarks.user_id and 
+                            bookmarks.categ_name=categories.cat_name  and 
+                            categories.cat_name = ? and users.id = ?''', 
                        (cat['cat_name'], session['user_id']))
      
         for row in rows:
             row['short_title'] = shorten_title(row['title'], 25)
-            row['tooltip'] = 'Title: ' + row['title']  \
-                              + '\n' + 'Description: ' + row['description']
+            row['tooltip'] = '<em><u>Title</u></em>: ' + row['title']  \
+                              + '\n' + '<em><u>Description</u></em>: ' + row['description']\
+                              + '\n' + '<em><u>Id</u></em>: ' + str(row['bid'])
         #print(rows)
         dict = {}
         dict['category'] = cat['cat_name'].lower()
@@ -98,10 +99,68 @@ def index():
     #print(bookmarks)
     return render_template('index.html', bookmarks=bookmarks)
 
-@app.route('/rename', methods=['GET', 'POST'])
+@app.route('/edit', methods=['GET', 'POST'])
 @login_required
-def rename():
-    redirect('/')
+def edit():
+    bookmarks = []
+    categories = []
+    cat_names = db.execute('select cat_name from categories where user_id = ?', 
+                (session['user_id'],))
+    for name in cat_names:
+        categories.append(name)
+    #print(categories)
+    for cat in categories:
+        rows = db.execute('''select bookmarks.id as bid, cat_name, title, url, description 
+                            from users, categories, bookmarks where 
+                            users.id = bookmarks.user_id and 
+                            bookmarks.categ_name=categories.cat_name  and 
+                            categories.cat_name = ? and users.id = ?''', 
+                       (cat['cat_name'], session['user_id']))
+     
+        for row in rows:
+            row['short_title'] = shorten_title(row['title'], 25)
+            row['tooltip'] = '<em><u>Title</u></em>: ' + row['title']  \
+                              + '\n' + '<em><u>Description</u></em>: ' + row['description']\
+                              + '\n' + '<em><u>Id</u></em>: ' + str(row['bid'])
+        #print(rows)
+        dict = {}
+        dict['category'] = cat['cat_name'].lower()
+        dict['rows'] = rows
+        bookmarks.append(dict)
+    #print(bookmarks)
+    return render_template('edit.html', bookmarks=bookmarks)
+
+@app.route('/edit_id/<string:id>', methods=['GET'])
+@login_required
+def edit_id(id):
+    bid = int(id)
+    rows = db.execute('select * from bookmarks where id = ? and user_id = ?',
+                      bid, session['user_id'])
+    #print(rows[0])
+    categories = []
+    cat_names = db.execute('select cat_name from categories where user_id = ?', 
+            (session['user_id'],))
+    for name in cat_names:
+        categories.append(name)
+    listCats = list(map(lambda x: x['cat_name'], categories))
+    html =  render_template('edit_id.html', row=rows[0], categories=listCats)
+    print(html)
+    return html
+
+@app.route('/apply', methods=['POST'])
+def apply():
+    if request.method == 'POST':
+        category = request.form.get('category')  
+        title = request.form.get('title')
+        url = request.form.get('url')
+        description = request.form.get('description')
+        bookmark_id = int(request.form.get('bid'))
+        # Have to test if the categories changed? Maybe not
+        db.execute('''update bookmarks set categ_name = ?, user_id = ?, 
+                      title = ?, url = ?, description = ? where id = ? ''',
+                      category, session['user_id'], title, url, 
+                      description, bookmark_id)
+        return redirect('/')
 
 @app.route('/create', methods=["GET", "POST"])
 @login_required

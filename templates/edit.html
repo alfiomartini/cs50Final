@@ -12,9 +12,11 @@
                 <h5>{{bookmark['category']}}</h5>
                 <ul class='resources'>
                     {% for row in bookmark['rows'] %}
-                        <li><a href="{{row['url']}}" target="_blank" data-toggle='tooltip'
+                        <!-- href="javascript:" makes it a fake anchor -->
+                        <li><a href="javascript:" data-toggle='tooltip'
                             title="{{row['tooltip']}}" data-placement='right'
-                            data-html='true'>
+                            data-html='true' id="{{row['bid']}}" 
+                            onclick="edit(this)">
                             {{row['short_title']}}</a>
                         </li>
                     {% endfor %}
@@ -28,5 +30,19 @@
     $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip();
     });
+
+    function clearContainer(){
+            $(".container").html('');
+        }
+    function edit(anchor){
+        //alert('Post id:' + anchor.id + '\n' 
+               // + 'Type of id: ' + typeof anchor.id);
+        post_id = anchor.id;
+        $.get('edit_id/' + post_id, function(data){
+            $("[data-toggle='tooltip']").tooltip('hide');
+            document.querySelector(".container").innerHTML = data;
+            //document.documentElement.innerHTML = data;
+        });
+    };
 </script>
 {% endblock %}
