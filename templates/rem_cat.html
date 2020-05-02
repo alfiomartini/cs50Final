@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block main %}
+    <form action="/rem_cat_name" method="post" 
+     onsubmit="">
+        <div class="form-group">
+            <select name='known' class="form-control bg-secondary text-white" 
+            id="known" onchange="changeCat();">
+                <option disabled selected value="">Categories</option>
+                {% for cat in categories %}
+                    <option value="{{cat}}"> {{cat}} </option>
+                {% endfor %}
+            </select> 
+        </div>
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" 
+            name="category"  type="text" id = 'category' required>
+        </div>
+        
+        <button class="btn btn-primary" type="submit">Remove</button>
+
+        <script>
+            function changeCat(){
+                var selected = document.getElementById('known').value;
+                document.getElementById('category').value = selected;
+            }
+            
+            document.querySelector("form").addEventListener("submit", function(event){
+                event.preventDefault();
+                category = document.querySelector('input').value;
+                var answer = prompt('Are you sure you want to remove it (yes/no)');
+                answer = answer.toLowerCase();
+                if (answer == 'yes' || answer == 'y'){
+                    document.querySelector('form').submit();
+                    //$.get('rem_cat_name/' + category, function(data){
+                    //window.location.assign(data);
+                    //});
+                }
+                else{
+                    return False;
+                }
+
+                 });
+
+                
+    
+            
+        </script>
+    </form>
+{% endblock %}

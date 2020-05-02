@@ -57,13 +57,7 @@ db = SQL("sqlite:///database/cs50final.db")
 #categories = []
 #CATS_LOADED = False
 
-def load_cats():
-    categories = []
-    cat_names = db.execute('select cat_name from categories where user_id = ?', 
-                (session['user_id'],))
-    for name in cat_names:
-        categories.append(name)
-    return True
+ 
 
 @app.route("/")
 @login_required
@@ -73,8 +67,10 @@ def load_cats():
 def index():
     bookmarks = []
     categories = []
-    cat_names = db.execute('select cat_name from categories where user_id = ?', 
-                (session['user_id'],))
+    cat_names = db.execute('''select cat_name from categories 
+                              where user_id = ? 
+                              order by cat_name''', 
+                              (session['user_id'],))
     for name in cat_names:
         categories.append(name)
     #print(categories)
@@ -83,8 +79,9 @@ def index():
                             from users, categories, bookmarks where 
                             users.id = bookmarks.user_id and 
                             bookmarks.categ_name=categories.cat_name  and 
-                            categories.cat_name = ? and users.id = ?''', 
-                       (cat['cat_name'], session['user_id']))
+                            categories.cat_name = ? and users.id = ?
+                            order by title''', 
+                            (cat['cat_name'], session['user_id']))
      
         for row in rows:
             row['short_title'] = shorten_title(row['title'], 25)
@@ -99,13 +96,42 @@ def index():
     #print(bookmarks)
     return render_template('index.html', bookmarks=bookmarks)
 
+@app.route('/rem_cat', methods=['GET'])
+@login_required
+def rem_cat():
+    categories = []
+    cat_names = db.execute('''select cat_name from categories 
+                              where user_id = ?
+                              order by cat_name''', 
+                             (session['user_id'],))
+    for name in cat_names:
+        categories.append(name)
+    listCats = list(map(lambda x: x['cat_name'], categories))
+    flash('Warning: Removing a category implies deleting all bookmarks linked to it')
+    return render_template('rem_cat.html', categories=listCats)
+
+@app.route('/rem_cat_name', methods=['POST'])
+@login_required
+def rem_cat_name():
+    if request.method == 'POST':
+        name = request.form.get('category')
+        db.execute('delete from bookmarks where categ_name = ? and user_id = ?', 
+                (name, session['user_id']))
+        db.execute('delete from categories where cat_name = ? and user_id = ?', 
+                (name, session['user_id']))
+        flash(f'Category: {name} and all its posts removed')
+        return redirect('/')
+    
+
 @app.route('/rem_bookmark', methods=['GET','POST'])
 @login_required
 def rem_bookmark():
     bookmarks = []
     categories = []
-    cat_names = db.execute('select cat_name from categories where user_id = ?', 
-                (session['user_id'],))
+    cat_names = db.execute('''select cat_name from categories 
+                              where user_id = ?
+                              order by cat_name''', 
+                             (session['user_id'],))
     for name in cat_names:
         categories.append(name)
     #print(categories)
@@ -114,7 +140,8 @@ def rem_bookmark():
                             from users, categories, bookmarks where 
                             users.id = bookmarks.user_id and 
                             bookmarks.categ_name=categories.cat_name  and 
-                            categories.cat_name = ? and users.id = ?''', 
+                            categories.cat_name = ? and users.id = ?
+                            order by title''', 
                        (cat['cat_name'], session['user_id']))
      
         for row in rows:
@@ -136,8 +163,10 @@ def rem_bookmark():
 def edit():
     bookmarks = []
     categories = []
-    cat_names = db.execute('select cat_name from categories where user_id = ?', 
-                (session['user_id'],))
+    cat_names = db.execute('''select cat_name from categories 
+                           where user_id = ?
+                           order by cat_name''', 
+                           (session['user_id'],))
     for name in cat_names:
         categories.append(name)
     #print(categories)
@@ -146,8 +175,9 @@ def edit():
                             from users, categories, bookmarks where 
                             users.id = bookmarks.user_id and 
                             bookmarks.categ_name=categories.cat_name  and 
-                            categories.cat_name = ? and users.id = ?''', 
-                       (cat['cat_name'], session['user_id']))
+                            categories.cat_name = ? and users.id = ?
+                            order by title''', 
+                            (cat['cat_name'], session['user_id']))
      
         for row in rows:
             row['short_title'] = shorten_title(row['title'], 25)
@@ -171,8 +201,10 @@ def edit_id(id):
                       bid, session['user_id'])
     #print(rows[0])
     categories = []
-    cat_names = db.execute('select cat_name from categories where user_id = ?', 
-            (session['user_id'],))
+    cat_names = db.execute('''select cat_name from categories 
+                              where user_id = ?
+                              order by cat_name''', 
+                              (session['user_id'],))
     for name in cat_names:
         categories.append(name)
     listCats = list(map(lambda x: x['cat_name'], categories))
@@ -204,7 +236,7 @@ def apply():
                       title = ?, url = ?, description = ? where id = ? ''',
                       category, session['user_id'], title, url, 
                       description, bookmark_id)
-        flash('Bookmark edited.')
+        flash(f'Bookmark with Title: {title} edited.')
         return redirect('/')
 
 @app.route('/create', methods=["GET", "POST"])
@@ -216,8 +248,10 @@ def create():
     # insert into resources (title, url, user_id)
     # if new category: insert into categories(cat_name, user_id)
     categories = []
-    cat_names = db.execute('select cat_name from categories where user_id = ?', 
-            (session['user_id'],))
+    cat_names = db.execute('''select cat_name from categories 
+                            where user_id = ?
+                            order by cat_name''', 
+                            (session['user_id'],))
     for name in cat_names:
         categories.append(name)
     listCats = list(map(lambda x: x['cat_name'], categories))
