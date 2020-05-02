@@ -99,6 +99,38 @@ def index():
     #print(bookmarks)
     return render_template('index.html', bookmarks=bookmarks)
 
+@app.route('/rem_bookmark', methods=['GET','POST'])
+@login_required
+def rem_bookmark():
+    bookmarks = []
+    categories = []
+    cat_names = db.execute('select cat_name from categories where user_id = ?', 
+                (session['user_id'],))
+    for name in cat_names:
+        categories.append(name)
+    #print(categories)
+    for cat in categories:
+        rows = db.execute('''select bookmarks.id as bid, cat_name, title, url, description 
+                            from users, categories, bookmarks where 
+                            users.id = bookmarks.user_id and 
+                            bookmarks.categ_name=categories.cat_name  and 
+                            categories.cat_name = ? and users.id = ?''', 
+                       (cat['cat_name'], session['user_id']))
+     
+        for row in rows:
+            row['short_title'] = shorten_title(row['title'], 25)
+            row['tooltip'] = '<em><u>Title</u></em>: ' + row['title']  \
+                              + '\n' + '<em><u>Description</u></em>: ' + row['description']\
+                              + '\n' + '<em><u>Id</u></em>: ' + str(row['bid'])
+        #print(rows)
+        dict = {}
+        dict['category'] = cat['cat_name'].lower()
+        dict['rows'] = rows
+        bookmarks.append(dict)
+    #print(bookmarks)
+    flash('Select the bookmark you want to remove')
+    return render_template('rem_bookmark.html', bookmarks=bookmarks)
+
 @app.route('/edit', methods=['GET', 'POST'])
 @login_required
 def edit():
@@ -147,6 +179,17 @@ def edit_id(id):
     html =  render_template('edit_id.html', row=rows[0], categories=listCats)
     #print(html)
     return html
+
+@app.route('/rem_book_id/<string:id>', methods=['GET'])
+@login_required
+def rem_book_id(id):
+    bid = int(id)
+    rows = db.execute('select * from bookmarks where id = ? and user_id = ?',
+                      bid, session['user_id'])
+    title = rows[0]['title']
+    db.execute('delete from bookmarks where id = ?', (bid,))
+    flash(f'Bookmark with Title: {title} removed.')
+    return ('/')
 
 @app.route('/apply', methods=['POST'])
 def apply():
