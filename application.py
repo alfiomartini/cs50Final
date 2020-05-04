@@ -90,7 +90,7 @@ def index():
                               + '\n' + '<em><u>Id</u></em>: ' + str(row['bid'])
         #print(rows)
         dict = {}
-        dict['category'] = cat['cat_name'].lower()
+        dict['category'] = shorten_title(cat['cat_name'].lower(), 15)
         dict['rows'] = rows
         bookmarks.append(dict)
     #print(bookmarks)
@@ -151,7 +151,7 @@ def rem_bookmark():
                               + '\n' + '<em><u>Id</u></em>: ' + str(row['bid'])
         #print(rows)
         dict = {}
-        dict['category'] = cat['cat_name'].lower()
+        dict['category'] = shorten_title(cat['cat_name'].lower(), 15)
         dict['rows'] = rows
         bookmarks.append(dict)
     #print(bookmarks)
@@ -186,7 +186,7 @@ def edit():
                               + '\n' + '<em><u>Id</u></em>: ' + str(row['bid'])
         #print(rows)
         dict = {}
-        dict['category'] = cat['cat_name'].lower()
+        dict['category'] = shorten_title(cat['cat_name'].lower(), 15)
         dict['rows'] = rows
         bookmarks.append(dict)
     #print(bookmarks)

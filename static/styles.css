@@ -14,6 +14,8 @@ nav .navbar-brand
     }
   }
 
+/* */
+
 /*  */
 form {
     text-align: center;
@@ -35,7 +37,6 @@ main
 {
     /* scroll horizontally as needed */
     overflow-x: auto;
-
 }
 
 main img
