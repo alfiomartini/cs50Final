@@ -6,6 +6,7 @@ from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 from helpers import apology, login_required, shorten_title
+#from database import MySQL
 
 # Configure application
 app = Flask(__name__)
@@ -50,38 +51,35 @@ Session(app)
 # Configure CS50 Library to use SQLite database
 db = SQL("sqlite:///database/cs50final.db")
 
+# load database 
+#mydb = MySQL("sqlite:///database/cs50final.db")
+
+
 # enables foreign key constraints at runtime
 #db.execute('PRAGMA foreign_keys = ON')
 
-# initialize here just for testing
-#categories = []
-#CATS_LOADED = False
 
  
-
-@app.route("/")
-@login_required
-# select categories for this user
-# select resources for each category (use a global variable)
-# display in index.html using flexbox
-def index():
-    bookmarks = []
+def  select_cats():
+    sql_cats = '''select cat_name from categories 
+                where user_id = ? 
+                order by cat_name'''
     categories = []
-    cat_names = db.execute('''select cat_name from categories 
-                              where user_id = ? 
-                              order by cat_name''', 
-                              (session['user_id'],))
+    cat_names = db.execute(sql_cats, (session['user_id'],))
     for name in cat_names:
         categories.append(name)
-    #print(categories)
+    return categories
+
+def build_bookmarks(categories):
+    sql_bookms = '''select bookmarks.id as bid, cat_name, title, url, description 
+                from users, categories, bookmarks where 
+                users.id = bookmarks.user_id and 
+                bookmarks.categ_name=categories.cat_name  and 
+                categories.cat_name = ? and users.id = ?
+                order by title'''
+    bookmarks = []
     for cat in categories:
-        rows = db.execute('''select bookmarks.id as bid, cat_name, title, url, description 
-                            from users, categories, bookmarks where 
-                            users.id = bookmarks.user_id and 
-                            bookmarks.categ_name=categories.cat_name  and 
-                            categories.cat_name = ? and users.id = ?
-                            order by title''', 
-                            (cat['cat_name'], session['user_id']))
+        rows = db.execute(sql_bookms, (cat['cat_name'], session['user_id']))
      
         for row in rows:
             row['short_title'] = shorten_title(row['title'], 25)
@@ -93,19 +91,25 @@ def index():
         dict['category'] = shorten_title(cat['cat_name'].lower(), 15)
         dict['rows'] = rows
         bookmarks.append(dict)
+    return bookmarks
+
+@app.route("/")
+@login_required
+# select categories for this user
+# select resources for each category (use a global variable)
+# display in index.html using flexbox
+def index():
+    categories = select_cats()
+    #categories = mydb.select_cats(session['user_id'])
+    #print(categories)
+    bookmarks = build_bookmarks(categories)
     #print(bookmarks)
     return render_template('index.html', bookmarks=bookmarks)
 
 @app.route('/rem_cat', methods=['GET'])
 @login_required
 def rem_cat():
-    categories = []
-    cat_names = db.execute('''select cat_name from categories 
-                              where user_id = ?
-                              order by cat_name''', 
-                             (session['user_id'],))
-    for name in cat_names:
-        categories.append(name)
+    categories =  select_cats()
     listCats = list(map(lambda x: x['cat_name'], categories))
     flash('Warning: Removing a category implies deleting all bookmarks linked to it')
     return render_template('rem_cat.html', categories=listCats)
@@ -126,34 +130,8 @@ def rem_cat_name():
 @app.route('/rem_bookmark', methods=['GET','POST'])
 @login_required
 def rem_bookmark():
-    bookmarks = []
-    categories = []
-    cat_names = db.execute('''select cat_name from categories 
-                              where user_id = ?
-                              order by cat_name''', 
-                             (session['user_id'],))
-    for name in cat_names:
-        categories.append(name)
-    #print(categories)
-    for cat in categories:
-        rows = db.execute('''select bookmarks.id as bid, cat_name, title, url, description 
-                            from users, categories, bookmarks where 
-                            users.id = bookmarks.user_id and 
-                            bookmarks.categ_name=categories.cat_name  and 
-                            categories.cat_name = ? and users.id = ?
-                            order by title''', 
-                       (cat['cat_name'], session['user_id']))
-     
-        for row in rows:
-            row['short_title'] = shorten_title(row['title'], 25)
-            row['tooltip'] = '<em><u>Title</u></em>: ' + row['title']  \
-                              + '\n' + '<em><u>Description</u></em>: ' + row['description']\
-                              + '\n' + '<em><u>Id</u></em>: ' + str(row['bid'])
-        #print(rows)
-        dict = {}
-        dict['category'] = shorten_title(cat['cat_name'].lower(), 15)
-        dict['rows'] = rows
-        bookmarks.append(dict)
+    categories = select_cats()
+    bookmarks = build_bookmarks(categories)
     #print(bookmarks)
     flash('Select the bookmark you want to remove')
     return render_template('rem_bookmark.html', bookmarks=bookmarks)
@@ -161,34 +139,8 @@ def rem_bookmark():
 @app.route('/edit', methods=['GET', 'POST'])
 @login_required
 def edit():
-    bookmarks = []
-    categories = []
-    cat_names = db.execute('''select cat_name from categories 
-                           where user_id = ?
-                           order by cat_name''', 
-                           (session['user_id'],))
-    for name in cat_names:
-        categories.append(name)
-    #print(categories)
-    for cat in categories:
-        rows = db.execute('''select bookmarks.id as bid, cat_name, title, url, description 
-                            from users, categories, bookmarks where 
-                            users.id = bookmarks.user_id and 
-                            bookmarks.categ_name=categories.cat_name  and 
-                            categories.cat_name = ? and users.id = ?
-                            order by title''', 
-                            (cat['cat_name'], session['user_id']))
-     
-        for row in rows:
-            row['short_title'] = shorten_title(row['title'], 25)
-            row['tooltip'] = '<em><u>Title</u></em>: ' + row['title']  \
-                              + '\n' + '<em><u>Description</u></em>: ' + row['description']\
-                              + '\n' + '<em><u>Id</u></em>: ' + str(row['bid'])
-        #print(rows)
-        dict = {}
-        dict['category'] = shorten_title(cat['cat_name'].lower(), 15)
-        dict['rows'] = rows
-        bookmarks.append(dict)
+    categories = select_cats()
+    bookmarks = build_bookmarks(categories)
     #print(bookmarks)
     flash('Select the bookmark you want to edit')
     return render_template('edit.html', bookmarks=bookmarks)
@@ -200,15 +152,10 @@ def edit_id(id):
     rows = db.execute('select * from bookmarks where id = ? and user_id = ?',
                       bid, session['user_id'])
     #print(rows[0])
-    categories = []
-    cat_names = db.execute('''select cat_name from categories 
-                              where user_id = ?
-                              order by cat_name''', 
-                              (session['user_id'],))
-    for name in cat_names:
-        categories.append(name)
+    categories =  select_cats()
     listCats = list(map(lambda x: x['cat_name'], categories))
-    html =  render_template('edit_id.html', row=rows[0], categories=listCats)
+    html =  render_template('edit_id.html', row=rows[0], 
+                               categories=listCats)
     #print(html)
     return html
 
@@ -242,18 +189,7 @@ def apply():
 @app.route('/create', methods=["GET", "POST"])
 @login_required
 def create():
-    # add input form for categories
-    # add a select menu from known categories
-    # insert category in input from select menu
-    # insert into resources (title, url, user_id)
-    # if new category: insert into categories(cat_name, user_id)
-    categories = []
-    cat_names = db.execute('''select cat_name from categories 
-                            where user_id = ?
-                            order by cat_name''', 
-                            (session['user_id'],))
-    for name in cat_names:
-        categories.append(name)
+    categories =  select_cats()
     listCats = list(map(lambda x: x['cat_name'], categories))
     if request.method == 'POST':
         category = request.form.get('category')
@@ -315,7 +251,7 @@ def login():
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
-
+    
         # Redirect user to home page
         flash('You are now logged in')
         return redirect("/")
