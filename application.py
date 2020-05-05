@@ -297,7 +297,7 @@ def register():
             db.execute('insert into users(name, password) values(?,?)', 
                            username, hash_passw)
             flash("You are registered.")
-            return render_template('registered.html')
+            return redirect('/login')
     else:
         return render_template('register.html')
 
