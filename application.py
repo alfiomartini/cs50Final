@@ -136,6 +136,7 @@ def rem_book_id(id):
     return ('/')
 
 @app.route('/apply', methods=['POST'])
+# have to check if this is a new category or not
 def apply():
     if request.method == 'POST':
         category = request.form.get('category')  
@@ -143,7 +144,13 @@ def apply():
         url = request.form.get('url')
         description = request.form.get('description')
         bookmark_id = int(request.form.get('bid'))
-        # Have to test if the categories changed? Maybe not
+        # Have to test if the categories changed? Not
+        # But if it is a new category, then I have to update categories
+        categories = mydb.select_cats()
+        listCats = list(map(lambda x: x['cat_name'], categories))
+        if category not in listCats:
+           mydb.execute('insert into categories(cat_name, user_id) values(?,?)', 
+                         category, session['user_id'])
         mydb.execute('''update bookmarks set categ_name = ?, user_id = ?, 
                       title = ?, url = ?, description = ? where id = ? ''',
                       category, session['user_id'], title, url, 

@@ -4,6 +4,16 @@ nav .navbar-brand
     font-size: x-large;
 }
 
+
+nav.navbar{
+    background-color: #7f5a83;
+    background-image: linear-gradient(315deg, #7f5a83 0%, #0d324d 74%);
+}
+
+.nav-link {
+    color: whitesmoke;
+}
+
 .dropdown-menu a:hover{
     background-color:blue;
 }
@@ -15,7 +25,11 @@ nav .navbar-brand
   }
 
 /* */
-
+body{
+    /* dark slate https://hookagency.com/website-color-schemes/ */
+    background-color:#1d1e22; /*#161748;*/
+    color: lightgreen;
+}
 /*  */
 form {
     text-align: center;
@@ -30,6 +44,14 @@ main .form-control
     width: 50%;
 
     /* center contents */
+}
+
+/* change password */
+
+/* center button: this is always hard :-) */
+#btn-chg{
+    display: block;
+    margin: 0 auto;
 }
 
 /*    */
@@ -65,14 +87,16 @@ main img
 .resources li a{
     display: inline-block;
     text-decoration: none;
-    color: black;
+    color: whitesmoke;
+    font-size: 15px;
+    font-family: 'Nanum Gothic', sans-serif; /* 'Open Sans Condensed', sans-serif;*/
     padding: 1px 6px;
     width: 220px;
 }
 
 .resources li a:hover{
-    color: white;
-    background-color: navy;
+    color: black;
+    background-color: whitesmoke;
 }
 
 /*  */
