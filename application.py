@@ -6,7 +6,7 @@ from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 from helpers import apology, login_required, shorten_title
-#from database import MySQL
+from database import MySQL
 
 # Configure application
 app = Flask(__name__)
@@ -49,49 +49,14 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Configure CS50 Library to use SQLite database
-db = SQL("sqlite:///database/cs50final.db")
-
+#db = SQL("sqlite:///database/cs50final.db")
+# 
 # load database 
-#mydb = MySQL("sqlite:///database/cs50final.db")
+mydb = MySQL("sqlite:///database/cs50final.db")
 
 
 # enables foreign key constraints at runtime
 #db.execute('PRAGMA foreign_keys = ON')
-
-
- 
-def  select_cats():
-    sql_cats = '''select cat_name from categories 
-                where user_id = ? 
-                order by cat_name'''
-    categories = []
-    cat_names = db.execute(sql_cats, (session['user_id'],))
-    for name in cat_names:
-        categories.append(name)
-    return categories
-
-def build_bookmarks(categories):
-    sql_bookms = '''select bookmarks.id as bid, cat_name, title, url, description 
-                from users, categories, bookmarks where 
-                users.id = bookmarks.user_id and 
-                bookmarks.categ_name=categories.cat_name  and 
-                categories.cat_name = ? and users.id = ?
-                order by title'''
-    bookmarks = []
-    for cat in categories:
-        rows = db.execute(sql_bookms, (cat['cat_name'], session['user_id']))
-     
-        for row in rows:
-            row['short_title'] = shorten_title(row['title'], 25)
-            row['tooltip'] = '<em><u>Title</u></em>: ' + row['title']  \
-                              + '\n' + '<em><u>Description</u></em>: ' + row['description']\
-                              + '\n' + '<em><u>Id</u></em>: ' + str(row['bid'])
-        #print(rows)
-        dict = {}
-        dict['category'] = shorten_title(cat['cat_name'].lower(), 15)
-        dict['rows'] = rows
-        bookmarks.append(dict)
-    return bookmarks
 
 @app.route("/")
 @login_required
@@ -99,17 +64,17 @@ def build_bookmarks(categories):
 # select resources for each category (use a global variable)
 # display in index.html using flexbox
 def index():
-    categories = select_cats()
+    categories = mydb.select_cats()
     #categories = mydb.select_cats(session['user_id'])
     #print(categories)
-    bookmarks = build_bookmarks(categories)
+    bookmarks = mydb.build_bookmarks(categories)
     #print(bookmarks)
     return render_template('index.html', bookmarks=bookmarks)
 
 @app.route('/rem_cat', methods=['GET'])
 @login_required
 def rem_cat():
-    categories =  select_cats()
+    categories =  mydb.select_cats()
     listCats = list(map(lambda x: x['cat_name'], categories))
     flash('Warning: Removing a category implies deleting all bookmarks linked to it')
     return render_template('rem_cat.html', categories=listCats)
@@ -119,9 +84,9 @@ def rem_cat():
 def rem_cat_name():
     if request.method == 'POST':
         name = request.form.get('category')
-        db.execute('delete from bookmarks where categ_name = ? and user_id = ?', 
+        mydb.execute('delete from bookmarks where categ_name = ? and user_id = ?', 
                 (name, session['user_id']))
-        db.execute('delete from categories where cat_name = ? and user_id = ?', 
+        mydb.execute('delete from categories where cat_name = ? and user_id = ?', 
                 (name, session['user_id']))
         flash(f'Category: {name} and all its posts removed')
         return redirect('/')
@@ -130,8 +95,8 @@ def rem_cat_name():
 @app.route('/rem_bookmark', methods=['GET','POST'])
 @login_required
 def rem_bookmark():
-    categories = select_cats()
-    bookmarks = build_bookmarks(categories)
+    categories = mydb.select_cats()
+    bookmarks = mydb.build_bookmarks(categories)
     #print(bookmarks)
     flash('Select the bookmark you want to remove')
     return render_template('rem_bookmark.html', bookmarks=bookmarks)
@@ -139,8 +104,8 @@ def rem_bookmark():
 @app.route('/edit', methods=['GET', 'POST'])
 @login_required
 def edit():
-    categories = select_cats()
-    bookmarks = build_bookmarks(categories)
+    categories = mydb.select_cats()
+    bookmarks = mydb.build_bookmarks(categories)
     #print(bookmarks)
     flash('Select the bookmark you want to edit')
     return render_template('edit.html', bookmarks=bookmarks)
@@ -149,10 +114,10 @@ def edit():
 @login_required
 def edit_id(id):
     bid = int(id)
-    rows = db.execute('select * from bookmarks where id = ? and user_id = ?',
+    rows = mydb.execute('select * from bookmarks where id = ? and user_id = ?',
                       bid, session['user_id'])
     #print(rows[0])
-    categories =  select_cats()
+    categories =  mydb.select_cats()
     listCats = list(map(lambda x: x['cat_name'], categories))
     html =  render_template('edit_id.html', row=rows[0], 
                                categories=listCats)
@@ -163,10 +128,10 @@ def edit_id(id):
 @login_required
 def rem_book_id(id):
     bid = int(id)
-    rows = db.execute('select * from bookmarks where id = ? and user_id = ?',
+    rows = mydb.execute('select * from bookmarks where id = ? and user_id = ?',
                       bid, session['user_id'])
     title = rows[0]['title']
-    db.execute('delete from bookmarks where id = ?', (bid,))
+    mydb.execute('delete from bookmarks where id = ?', (bid,))
     flash(f'Bookmark with Title: {title} removed.')
     return ('/')
 
@@ -179,7 +144,7 @@ def apply():
         description = request.form.get('description')
         bookmark_id = int(request.form.get('bid'))
         # Have to test if the categories changed? Maybe not
-        db.execute('''update bookmarks set categ_name = ?, user_id = ?, 
+        mydb.execute('''update bookmarks set categ_name = ?, user_id = ?, 
                       title = ?, url = ?, description = ? where id = ? ''',
                       category, session['user_id'], title, url, 
                       description, bookmark_id)
@@ -189,17 +154,17 @@ def apply():
 @app.route('/create', methods=["GET", "POST"])
 @login_required
 def create():
-    categories =  select_cats()
+    categories = mydb.select_cats()
     listCats = list(map(lambda x: x['cat_name'], categories))
     if request.method == 'POST':
         category = request.form.get('category')
         url = request.form.get('url')
         title = request.form.get('title')
         description = request.form.get('description')
-        db.execute('''insert into bookmarks(categ_name, user_id, url, title, description) 
+        mydb.execute('''insert into bookmarks(categ_name, user_id, url, title, description) 
                    values(?,?,?,?,?)''',category, session['user_id'], url, title, description)
         if category not in listCats:
-            db.execute('insert into categories(cat_name, user_id) values(?,?)', 
+            mydb.execute('insert into categories(cat_name, user_id) values(?,?)', 
                     category, session['user_id'])
         flash(f"Bookmark added to category {category}")
         return redirect('/')
@@ -214,7 +179,7 @@ def check():
     if len(name) < 1:
         return jsonify(False)
     # query database to see if there are any row with this username
-    row = db.execute("select * from users where username = ?", (name,))
+    row = mydb.execute("select * from users where username = ?", (name,))
     if len(row) == 0:
         avail = True
     else:
@@ -239,9 +204,10 @@ def login():
         # Ensure password was submitted
         elif not request.form.get("password"):
             return apology("You must provide a password.")
-
+        
+        
         # Query database for username
-        rows = db.execute("SELECT * FROM users WHERE name = :username",
+        rows = mydb.execute("SELECT * FROM users WHERE name = :username",
                           username=request.form.get("username"))
 
         # Ensure username exists and password is correct
@@ -251,6 +217,9 @@ def login():
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
+
+        # set user_id in the database
+        mydb.set_userid(session['user_id'])
     
         # Redirect user to home page
         flash('You are now logged in')
@@ -278,7 +247,7 @@ def register():
         username = request.form.get('username')
         if not username:
             return apology("You must provide a user name.")
-        row = db.execute("select * from users where name = ?", (username,))
+        row = mydb.execute("select * from users where name = ?", (username,))
         if len(row) == 1:
             return apology('This user is already registered.')
          # just to make it sure. It could never happen
@@ -294,7 +263,7 @@ def register():
         if not check_password_hash(hash_passw, confirmation):
             return apology('Passwords do not match.')
         else:
-            db.execute('insert into users(name, password) values(?,?)', 
+            mydb.execute('insert into users(name, password) values(?,?)', 
                            username, hash_passw)
             flash("You are registered.")
             return redirect('/login')
@@ -314,14 +283,14 @@ def change():
         if new != conf:
             return apology("New passord and confirmation don't match.")
         # query database to access user data
-        row = db.execute("select * from users where id = ?", 
+        row = mydb.execute("select * from users where id = ?", 
               (session['user_id'],))
         oldhash = row[0]['hash']
         if not check_password_hash(oldhash, old):
             return apology('Current password is wrong.')
         newhash = generate_password_hash(new)
         # update database with new user password 
-        db.execute('update users set hash = ? where id = ?',
+        mydb.execute('update users set hash = ? where id = ?',
                     (newhash, session['user_id'],))
         return redirect('/logout')
     else:
