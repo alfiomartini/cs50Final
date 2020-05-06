@@ -43,16 +43,15 @@
                             data-placement='bottom'>Edit</a></li>
                         <li class = "nav-item dropdown"> 
                             <a  class="nav-link dropdown-toggle"  href="#"
-                                id="navbardrop" data-toggle="dropdown" data-toggle-second="tooltip"
-                                title="Delete Category or Bookmark" data-placement='right'> 
+                                id="navbardrop" data-toggle="dropdown"> 
                                 Remove</a>
                             <div class="dropdown-menu bg-dark"> 
                                 <a class= "dropdown-item text-white" href="/rem_bookmark"
-                                    data-toggle='tooltip' title="Delete Bookmark" data-placement='right'> 
+                                    data-toggle='tooltip' title="Delete Bookmark" data-placement='top'> 
                                     Bookmark </a> 
                                 <a class= "dropdown-item text-white" href="/rem_cat"
                                   data-toggle='tooltip' title="Delete Category and its Bookmarks" 
-                                  data-placement='right'> Category </a>
+                                  data-placement='top'> Category </a>
                             </div>
                         </li>
                         <li class="nav-item"><a class="nav-link" href="/change"
@@ -83,6 +82,11 @@
         <main class="container p-5" id="main">
             {% block main %}{% endblock %}
         </main>
+        <script>
+            function hideTooltip(){
+                $("[data-toggle-second='tooltip']").tooltip('hide');
+            }
+        </script>
     </body>
 
 </html>

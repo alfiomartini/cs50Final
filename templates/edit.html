@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Index
+    Edit
 {% endblock %}
 
 {% block main %}
@@ -39,11 +39,13 @@
         //alert('Post id:' + anchor.id + '\n' 
                // + 'Type of id: ' + typeof anchor.id);
         post_id = anchor.id;
-        $.get('edit_id/' + post_id, function(data){
-            $("[data-toggle='tooltip']").tooltip('hide');
-            document.querySelector(".container").innerHTML = data;
+        // transfer to url
+        window.location.assign('edit_id/' + post_id);
+        //$.get('edit_id/' + post_id, function(data){
+            //$("[data-toggle='tooltip']").tooltip('hide');
+            //document.querySelector(".container").innerHTML = data;
             //document.documentElement.innerHTML = data;
-        });
+        //});
     };
 </script>
 {% endblock %}

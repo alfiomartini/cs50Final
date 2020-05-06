@@ -38,9 +38,10 @@ class MySQL(SQL):
         
             for row in rows:
                 row['short_title'] = shorten_title(row['title'], 25)
-                row['tooltip'] = '<em><u>Title</u></em>: ' + row['title']  \
-                                + '\n' + '<em><u>Description</u></em>: ' + row['description']\
-                                + '\n' + '<em><u>Id</u></em>: ' + str(row['bid'])
+                row['tooltip'] = '<em><u>Category</u></em> : ' + cat['cat_name']\
+                                + '\n' + '<em><u>Title</u></em> : ' + row['title']\
+                                + '\n' + '<em><u>Description</u></em> : ' + row['description']\
+                               # + '\n' + '<em><u>Id</u></em>: ' + str(row['bid'])
             #print(rows)
             dict = {}
             dict['category'] = shorten_title(cat['cat_name'].lower(), 15)

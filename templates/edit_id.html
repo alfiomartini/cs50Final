@@ -1,37 +1,72 @@
- <form action="/apply" method="post" onsubmit="">
-    <div class="form-group">
-        <select name='known' class="form-control bg-secondary text-white" 
-        id="known" 
-        onchange="var selected = document.getElementById('known').value;
-                  document.getElementById('category').value = selected;">
-            <option disabled selected value="">Categories</option>
-            {% for cat in categories %}
-                <option value="{{cat}}"> {{cat}} </option>
-            {% endfor %}
-        </select> 
-    </div>
-    <div class="form-group">
-        <input autocomplete="off" autofocus class="form-control" 
-        name="category"  type="text" value="{{row['categ_name']}}"
-        id = 'category' required>
-    </div>
-    <div class="form-group">
-        <input autocomplete="off" autofocus class="form-control" 
-        name="url" placeholder="" type="text"
-        required value='{{row["url"]}}'>
-    </div>
-    <div class="form-group">
-        <input class="form-control" name="title" placeholder="" 
-        type="text" value="{{row['title']}}" required>
-    </div>
-    <div class="form-group">
-        <textarea class="form-control" rows="4"  name='description' 
-        placeholder = "" ">{{row['description']}}</textarea>
-    </div>
-    <div class="form-group">
-        <input class="form-control" name="bid" placeholder="" 
-        type="hidden" value="{{row['id']}}" required>
-    </div>
-    <button class="btn btn-primary" type="submit">Apply</button>
-</form>
+{% extends "layout.html" %}
+
+{% block title %}
+    Edit Id
+{% endblock %}
+
+{% block main %}
+    <form action="/apply" method="post" onsubmit="">
+        <div class="form-group">
+            <select name='known' class="form-control bg-secondary text-white" 
+            id="known" 
+            onchange="var selected = document.getElementById('known').value;
+                    document.getElementById('category').value = selected;">
+                <option disabled selected value="">Categories</option>
+                {% for cat in categories %}
+                    <option value="{{cat}}"> {{cat}} </option>
+                {% endfor %}
+            </select> 
+        </div>
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" 
+            name="category"  type="text" value="{{row['categ_name']}}"
+            id = 'category' required>
+        </div>
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" 
+            name="url" placeholder="" type="text"
+            required value='{{row["url"]}}' onchange="checkURL();">
+        </div>
+        <div class="form-group">
+            <input class="form-control" name="title" placeholder="" 
+            type="text" value="{{row['title']}}" required>
+        </div>
+        <div class="form-group">
+            <textarea class="form-control" rows="4"  name='description' 
+            placeholder = "" ">{{row['description']}}</textarea>
+        </div>
+        <div class="form-group">
+            <input class="form-control" name="bid" placeholder="" 
+            type="hidden" value="{{row['id']}}" required>
+        </div>
+        <button class="btn btn-primary" type="submit">Apply</button>
+    </form>
+    <script>
+        // initializes tooltips in bootstrap 4
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+            $('[data-toggle-second="tooltip"]').tooltip();
+        });
+
+        function checkURL(){
+        var urlStr = document.querySelector("input[name='url']").value;
+        try{
+            url = new URL(urlStr);
+            //alert(url);
+        }
+        catch(_){
+            alert('Invalid url');
+            return false;
+        }
+        if (url.protocol === 'http:' || url.protocol === 'https:')
+        {
+            return true;
+            //$.ajax({url: url})
+            //.done(html => {getHTML(html);})
+            //.fail(xhr => {});
+        }
+        else return false;
+    }
+    </script>
+{% endblock %}
  
