@@ -1,6 +1,7 @@
 import os
 from cs50 import SQL
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
+from flask import url_for
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
@@ -28,7 +29,7 @@ def after_request(response):
     # cannot be served in any case and the data must be re-validated from the server before serving.
     # no-cache indicates that the cache can be maintained but the cached content is to be re-validated 
     # (using ETag for example) from the server before being served. 
-    response.headers["Cache-Control"] = "no-cache"
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
     # how long a cache content should be considered fresh? never.
     response.headers["Expires"] = 0
     return response
@@ -58,18 +59,27 @@ mydb = MySQL("sqlite:///database/cs50final.db")
 # enables foreign key constraints at runtime
 #db.execute('PRAGMA foreign_keys = ON')
 
+
 @app.route("/")
 @login_required
-# select categories for this user
-# select resources for each category (use a global variable)
-# display in index.html using flexbox
 def index():
     categories = mydb.select_cats()
-    #categories = mydb.select_cats(session['user_id'])
-    #print(categories)
     bookmarks = mydb.build_bookmarks(categories)
-    #print(bookmarks)
     return render_template('index.html', bookmarks=bookmarks)
+
+@app.route('/search/<string:term_list>', methods=['GET'])
+@login_required
+def search(term_list):
+    term_list = term_list.lower()
+    term_list = "%" + term_list + "%" 
+    bookmarks = mydb.build_search(term_list)
+    if bookmarks:
+        html = render_template('search.html', bookmarks=bookmarks[0])
+        #print(html)
+        return html
+    else:
+        return ""
+    
 
 @app.route('/rem_cat', methods=['GET'])
 @login_required

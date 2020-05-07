@@ -34,6 +34,18 @@
             </button>
             <div class="collapse navbar-collapse" id="navbar">
                 {% if session.user_id %}
+                    <form class="form-inline " method='GET' action='' id="form-search"> 
+                        <input autocomplete="off" autofocus placeholder="Search" 
+                        class = "form-control mr-sm-2 mt-2" type="text" name="bookmark" required>
+                        <!--
+                        <button type="submit" class="btn btn-primary  mr-sm-2 mt-2" 
+                        onclick="return false;"> 
+                        Search
+                        </button> -->
+                        <!-- return false here is essential, because  after execution of the event handler,
+                        i.e. of evalForm, the default behaviour of refreshing the page, takes place
+                        returning false simply says to the browser that the button has not been clicked -->
+                    </form>
                     <ul class="navbar-nav mr-auto mt-2">
                         <li class="nav-item"><a class="nav-link" href="/create"
                             data-toggle='tooltip' title="New Bookmark" data-placement='bottom'>
@@ -80,13 +92,10 @@
         {% endif %}
 
         <main class="container p-5" id="main">
+            <div id="search"></div>
             {% block main %}{% endblock %}
+            {% block scripts %}{% endblock %}
         </main>
-        <script>
-            function hideTooltip(){
-                $("[data-toggle-second='tooltip']").tooltip('hide');
-            }
-        </script>
     </body>
 
 </html>
