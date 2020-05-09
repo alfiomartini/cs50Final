@@ -35,7 +35,7 @@ class MySQL(SQL):
             rows = self.execute(self.sql_bookms, (cat['cat_name'], self.user_id))
             for row in rows:
                 row['short_title'] = shorten_title(row['title'], 25)
-                row['tooltip'] = '<em><u>Category</u></em> : ' + cat['cat_name']\
+                row['tooltip'] = '<em><u>Category</u></em> : ' + cat['cat_name'].title()\
                                 + '\n' + '<em><u>Title</u></em> : ' + row['title']\
                                 + '\n' + '<em><u>Description</u></em> : ' + row['description']\
                                # + '\n' + '<em><u>Id</u></em>: ' + str(row['bid'])
@@ -53,7 +53,7 @@ class MySQL(SQL):
         cat_name = 'Search Links'
         for row in rows:
             row['short_title'] = shorten_title(row['title'], 25)
-            row['tooltip'] = 'Category : ' + row['categ_name']\
+            row['tooltip'] = 'Category : ' + row['categ_name'].title()\
                             + '\n' + 'Title: ' + row['title']\
                             + '\n' + 'Description : ' + row['description']\
                             # + '\n' + '<em><u>Id</u></em>: ' + str(row['bid'])

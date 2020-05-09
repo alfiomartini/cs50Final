@@ -149,7 +149,8 @@ def rem_book_id(id):
 # have to check if this is a new category or not
 def apply():
     if request.method == 'POST':
-        category = request.form.get('category')  
+        # categories always case independent
+        category = request.form.get('category').lower() 
         title = request.form.get('title')
         url = request.form.get('url')
         description = request.form.get('description')
@@ -174,7 +175,8 @@ def create():
     categories = mydb.select_cats()
     listCats = list(map(lambda x: x['cat_name'], categories))
     if request.method == 'POST':
-        category = request.form.get('category')
+        # category always case independent
+        category = request.form.get('category').lower()
         url = request.form.get('url')
         title = request.form.get('title')
         description = request.form.get('description')
