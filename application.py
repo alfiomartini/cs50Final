@@ -195,10 +195,9 @@ def create():
 def check():
     """Return true if username available, else false, in JSON format"""
     name = request.args.get('username')
-    if len(name) < 1:
-        return jsonify(False)
     # query database to see if there are any row with this username
-    row = mydb.execute("select * from users where username = ?", (name,))
+    row = mydb.execute("select * from users where name = ?", (name,))
+    # print('register row', row)
     if len(row) == 0:
         avail = True
     else:

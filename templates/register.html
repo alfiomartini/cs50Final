@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block main %}
-    <form action="/register" method="post" onsubmit="checkUser()">
+    <form action="/register" method="post" onsubmit="">
         <div class="form-group">
             <input autocomplete="off" autofocus class="form-control" 
             name="username" placeholder="Username" type="text"
@@ -31,6 +31,7 @@
                 var avail = JSON.parse(data);
                 if (avail)
                 {
+                    //alert('avail', avail)
                     return true;
                 }
                 else 

@@ -44,70 +44,26 @@
 {% endblock %}
 
 {% block scripts %}
-    <script>
-        // initializes tooltips in bootstrap 4
-        $(document).ready(function(){
-            $('[data-toggle="tooltip"]').tooltip();
-            $('[data-toggle-second="tooltip"]').tooltip();
-        });
-
-        function checkURL(){
-        var urlStr = document.querySelector("input[name='url']").value;
-        try{
-            url = new URL(urlStr);
-            //alert(url);
-        }
-        catch(_){
-            alert('Invalid url');
-            return false;
-        }
-        if (url.protocol === 'http:' || url.protocol === 'https:')
-        {
-            return true;
-            //$.ajax({url: url})
-            //.done(html => {getHTML(html);})
-            //.fail(xhr => {});
-        }
-        else return false;
+<script>
+    function checkURL(){
+    var url = document.querySelector("input[name='url']")
+    var urlStr = url.value;
+    try{
+        url = new URL(urlStr);
+        //alert(url);
     }
-
-    window.onload = function(){
-        let input = document.querySelector('input');
-        input.onkeyup = function(){
-            let term = input.value;
-            //remove spaces from both sides
-            term = term.trim();
-            //console.log('length of term', term.length);
-            if (term){
-                /*
-                Synchronous API call means Javascript thread will stop further execution 
-                of code until this Ajax request gets resolved. Since the main thread is 
-                blocked waiting for request to get completed, your browser will stop responding 
-                to events (it will become unresponsive). Had to do it, because I was having
-                problems with new async get requests without the previous one had been 
-                resolved. This is due to expensive database computations done in the
-                'search' route.
-                see: https://medium.com/@varunon9/what-can-go-wrong-if-you-make-synchronous-ajax-calls-using-jquery-understanding-event-loop-in-9b597c7a87a1
-                */
-                //alert(location.hostname);
-                $.ajax({
-                // this is a bizarre hack. I still do not get why I had to use this here and 
-                // not in other places.
-                url: location.protocol + '//' + location.hostname + ':' + location.port + '/' 
-                     + 'search/' + term,
-                method: 'get',
-                async: false, // notice this line
-                success: function(data, status){
-                    document.querySelector('#search').innerHTML = data;
-                }
-                });
-            }
-            else{
-                document.querySelector('#search').innerHTML = ''; 
-            //$("#search").html('');
-            }
-        };
+    catch(_){
+        alert('Invalid url');
+        url.value = '';
+        url.focus();
+        return false;
     }
+    if (url.protocol === 'http:' || url.protocol === 'https:')
+    {
+        return true;
+    }
+    else return false;
+}
 </script>
 {% endblock %}
  

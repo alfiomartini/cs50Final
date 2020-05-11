@@ -21,6 +21,8 @@
            rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
         <link href="/static/styles.css" rel="stylesheet">
+        <script src="/static/tooltip_init.js" defer></script>
+        <script src="/static/search.js" defer></script> 
         <title>{% block title %}{% endblock %}</title>
     </head>
     <body>
@@ -36,7 +38,8 @@
                 {% if session.user_id %}
                     <form class="form-inline " method='GET' action='' id="form-search"> 
                         <input autocomplete="off" autofocus placeholder="Search" 
-                        class = "form-control mr-sm-2 mt-2" type="text" name="bookmark" required>
+                        class = "form-control mr-sm-2 mt-2" type="text" name="bookmark" 
+                        id = 'search-input' required>
                         <!--
                         <button type="submit" class="btn btn-primary  mr-sm-2 mt-2" 
                         onclick="return false;"> 
