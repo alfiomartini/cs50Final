@@ -73,7 +73,7 @@ main img
     font-family: 'Times New Roman', Times, serif;
     list-style-type: none;
     margin: 0;
-    padding: 0;
+    padding: 0px 5px 8px 5px;
 }
 
 
@@ -82,6 +82,7 @@ main img
     font-variant: small-caps;
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-weight: bold;
+    padding: 3px 5px;
 }
 
 .resources li a{
@@ -94,12 +95,15 @@ main img
     width: 220px;
 }
 
+
+
 .resources li a:hover{
     color: black;
     background-color: whitesmoke;
 }
 
 /*  */
+
 .tooltip-inner{
     font-size: 14px;
     white-space: pre-wrap;
