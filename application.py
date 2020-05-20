@@ -92,14 +92,21 @@ def rem_cat():
 @app.route('/rem_cat_name', methods=['POST'])
 @login_required
 def rem_cat_name():
+    categories =  mydb.select_cats()
+    listCats = list(map(lambda x: x['cat_name'], categories))
     if request.method == 'POST':
         name = request.form.get('category')
-        mydb.execute('delete from bookmarks where categ_name = ? and user_id = ?', 
-                (name, session['user_id']))
-        mydb.execute('delete from categories where cat_name = ? and user_id = ?', 
-                (name, session['user_id']))
-        flash(f'Category: {name} and all its posts removed')
-        return redirect('/')
+        if name in listCats:
+            mydb.execute('delete from bookmarks where categ_name = ? and user_id = ?', 
+                    (name, session['user_id']))
+            mydb.execute('delete from categories where cat_name = ? and user_id = ?', 
+                    (name, session['user_id']))
+            flash(f'Category: {name} and all its posts removed')
+            return redirect('/')
+        else:
+            flash(f'Category: {name} is unknown')
+            return redirect('/')
+
     
 
 @app.route('/rem_bookmark', methods=['GET','POST'])

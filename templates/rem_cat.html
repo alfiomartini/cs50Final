@@ -24,26 +24,5 @@
 {% endblock %}
 
 {% block scripts %}
-<script>
-function changeCat(){
-    var selected = document.getElementById('known').value;
-    document.getElementById('category').value = selected;
-}
-
-document.querySelector("#form-cat").addEventListener("submit", function(event){
-    event.preventDefault();
-    //alert('Hello Form');
-    category = document.querySelector('input').value;
-    var answer = prompt('Are you sure you want to remove it (yes/no)');
-    answer = answer.toLowerCase();
-    if (answer == 'yes' || answer == 'y'){
-        document.querySelector('#form-cat').submit();
-        //window.location.assign('/');
-    }
-    else{
-        return false;
-    }
-
-});
-</script>
+<script src="static/rem_cat.js"></script>
 {% endblock %}
