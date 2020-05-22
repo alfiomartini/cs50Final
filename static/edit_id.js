@@ -20,23 +20,30 @@ function listeners(){
         - In all other cases, return value is ignored. In particular, 
         there’s no sense in returning true.
     */
-    function checkURL(event){
-        let urlStr = inputURL.value;
-        //console.log('url value', urlStr);
-        try{
-            url = new URL(urlStr);
-        }
-        catch(_){
-            alert('Invalid url');
-            inputURL.value = '';
-            inputURL.focus();
-        }
-        if (!(url.protocol === 'http:' || url.protocol === 'https:')){
-            alert('URL protocol must be http: or https:');
-            inputURL.value = '';
-            inputURL.focus();
-        }
+   function checkURL(event){
+    let container = document.getElementById('modal-div');
+    let modal = new Modal('');
+    let urlStr = inputURL.value;
+    //console.log('url value', urlStr);
+    try{
+        url = new URL(urlStr);
     }
+    catch(_){
+        modal.setModal(`Invalid url: ${urlStr}`);
+        container.innerHTML = modal.getModal();
+        modal.fireModal();
+        inputURL.value = '';
+        inputURL.focus();
+        return;
+    }
+    if (!(url.protocol === 'http:' || url.protocol === 'https:')){
+        modal.setModal(`URL protocol must be http: or https: instead of ${url.protocol}`);
+        container.innerHTML = modal.getModal();
+        modal.fireModal();
+        inputURL.value = '';
+        inputURL.focus();
+    }
+}
 
     function selectCat(){
         let selected = document.getElementById('known').value;
