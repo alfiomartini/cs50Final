@@ -27,19 +27,25 @@
 {% endblock %}
 
 {% block scripts %}
+<script src="/static/modal_class.js"></script>
 <script>
     function edit(anchor){
-        var answer = prompt('Are you sure you want to remove it (yes/no)');
-        answer = answer.toLowerCase();
-        if (answer == 'yes' || answer == 'y'){
+        let container = document.getElementById('modal-div');
+        let modal = new Prompt('');
+        modal.setPrompt(`Are you sure you want it removed?`);
+        container.innerHTML = modal.getPrompt();
+        modal.firePrompt();
+        // this is not ideal, but simple. Improve later, when
+        // a better idea comes
+        yesBtn = document.getElementById('modal-yes');
+        yesBtn.onclick= function(){
             post_id = anchor.id;
             $.get('rem_book_id/' + post_id, function(data){
                 $("[data-toggle='tooltip']").tooltip('hide');
                 // data is the index route: '/'
                 window.location.assign(data);
-        });
-        }
-        
-    };
+            });
+        } 
+    }
 </script>
 {% endblock %}

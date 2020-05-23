@@ -13,14 +13,18 @@ function listeners(){
         document.getElementById('category').value = selected;
     }
 
-
     function checkSubmit(event){
         event.preventDefault();
-        var answer = prompt('Are you sure you want to remove it (yes/no)');
-        answer = answer.toLowerCase();
-        if (answer == 'yes' || answer == 'y'){
+        let container = document.getElementById('modal-div');
+        let modal = new Prompt('');
+        modal.setPrompt(`Are you sure you want it removed?`);
+        container.innerHTML = modal.getPrompt();
+        modal.firePrompt();
+        // this is not ideal, but simple. Improve later, when
+        // a better idea comes
+        yesBtn = document.getElementById('modal-yes');
+        yesBtn.onclick= function(){
             form.submit();
         }
-
     }
 }
