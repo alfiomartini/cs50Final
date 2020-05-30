@@ -1,9 +1,18 @@
+.navbar{
+    position: sticky;
+    top: 5px;
+}
 nav .navbar-brand
 {
     /* size for brand */
     font-size: x-large;
 }
 
+.flashed{
+    position: sticky;
+    top: 5em;
+    z-index: -1;
+}
 
 /* nav.navbar{
     background-color: #7f5a83;
