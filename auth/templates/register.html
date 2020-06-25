@@ -24,5 +24,5 @@
 {% endblock %}
 {% block scripts %}
     <script src="/static/modal_class.js"></script>
-    <script src="/static/register.js"></script>
+    <script src="{{url_for('auth_bp.static', filename='register.js')}}"></script>
 {% endblock %}

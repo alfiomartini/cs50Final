@@ -65,6 +65,9 @@ class MySQL(SQL):
         return bookmarks
 
 
+mydb = MySQL("sqlite:///database/cs50final.db")
          
+# enables foreign key constraints at runtime
+#db.execute('PRAGMA foreign_keys = ON')
 
      

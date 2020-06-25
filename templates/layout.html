@@ -63,7 +63,7 @@
                         <li class="nav-item"><a class="nav-link" href="/create"
                             data-toggle='tooltip' title="New Bookmark" data-placement='bottom'>
                             New</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/edit" 
+                        <li class="nav-item"><a class="nav-link" href="{{url_for('edit_bp.edit')}}" 
                             data-toggle='tooltip' title="Edit Bookmarks" 
                             data-placement='bottom'>Edit</a></li>
                         <li class = "nav-item dropdown"> 
@@ -79,20 +79,20 @@
                                   data-placement='top'> Category </a>
                             </div>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="/change"
+                        <li class="nav-item"><a class="nav-link" href="{{url_for('auth_bp.change')}}"
                             data-toggle='tooltip' title="Change Password" 
                             data-placement='bottom'>Password</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ml-auto mt-2">
-                        <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{url_for('auth_bp.logout')}}">Log Out</a></li>
                     </ul>
                     <script src="/static/tooltip_init.js" defer></script>
                     <script src="/static/search.js" defer></script> 
                 {% else %}
                     <ul class="navbar-nav ml-auto mt-2">
-                        <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{url_for('auth_bp.register')}}">Register</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{url_for('auth_bp.login')}}">Log In</a></li>
                     </ul>
                 {% endif %}
             </div>
