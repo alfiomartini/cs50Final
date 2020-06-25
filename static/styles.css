@@ -1,3 +1,4 @@
+/* Navbar */
 .navbar{
     position: sticky;
     top: 5px;
@@ -14,17 +15,29 @@ nav .navbar-brand
     z-index: -1;
 }
 
-/* nav.navbar{
-    background-color: #7f5a83;
-    background-image: linear-gradient(315deg, #7f5a83 0%, #0d324d 74%);
-}
-
-.nav-link {
-    color: whitesmoke;
-} */
 
 .dropdown-menu a:hover{
-    background-color:blue;
+    background-color:#200f21;
+}
+
+/* see: https://stackoverflow.com/questions/18529274/change-navbar-color-in-twitter-bootstrap */
+.navbar-custom{
+    background-color:#200f21;
+}
+
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text {
+    color: wheat;
+} 
+
+/* change the link color */
+.navbar-custom .navbar-nav .nav-link {
+    color: wheat;
+}
+/* change the color of active or hovered links */
+.navbar-custom .nav-item.active .nav-link,
+.navbar-custom .nav-item:hover .nav-link {
+    color: lightsteelblue;
 }
 
 @media screen and (min-width: 700px){
@@ -33,13 +46,34 @@ nav .navbar-brand
     }
   }
 
-/* */
+/* Global Settings */
+
 body{
-    /* dark slate https://hookagency.com/website-color-schemes/ */
-    background-color:#1d1e22; /*#161748;*/
-    color: lightgreen;
+    background-color:#160f30;  
 }
-/*  */
+
+/* center button */
+#btn-chg{
+    display: block;
+    margin: 0 auto;
+}
+
+
+main
+{
+    /* scroll horizontally as needed */
+    overflow-x: auto;
+}
+
+main img
+{
+    /* constrain images on small screens */
+    max-width: 100%;
+}
+
+
+/* Forms */
+
 form {
     text-align: center;
 }
@@ -55,34 +89,14 @@ main .form-control
     /* center contents */
 }
 
-/* change password */
-
-/* center button: this is always hard :-) */
-#btn-chg{
-    display: block;
-    margin: 0 auto;
-}
-
-/*    */
-main
-{
-    /* scroll horizontally as needed */
-    overflow-x: auto;
-}
-
-main img
-{
-    /* constrain images on small screens */
-    max-width: 100%;
-}
-
-/*     */
+/* .resources in: index.html, search.html,  */
 .resources{
-    font-size: 17px;
+    font-size: 18px;
     font-family: 'Times New Roman', Times, serif;
     list-style-type: none;
     margin: 0;
     padding: 0px 5px 8px 5px;
+    /* background-color: black; */
 }
 
 
@@ -92,12 +106,13 @@ main img
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-weight: bold;
     padding: 3px 5px;
+    color: lightblue;
 }
 
 .resources li a{
     display: inline-block;
     text-decoration: none;
-    color: whitesmoke;
+    color: wheat;
     font-size: 15px;
     font-family: 'Nanum Gothic', sans-serif; /* 'Open Sans Condensed', sans-serif;*/
     padding: 1px 6px;
@@ -111,7 +126,7 @@ main img
     background-color: whitesmoke;
 }
 
-/*  */
+/* Tooltips */
 
 .tooltip-inner{
     font-size: 14px;
