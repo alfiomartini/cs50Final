@@ -49,7 +49,8 @@ nav .navbar-brand
 /* Global Settings */
 
 body{
-    background-color:#160f30;  
+     
+    background-color: #160f30;   
 }
 
 /* center button */
@@ -89,6 +90,10 @@ main .form-control
     /* center contents */
 }
 
+.form-group select{
+    background-color:#200f21 !important;
+}
+
 /* .resources in: index.html, search.html,  */
 .resources{
     font-size: 18px;
@@ -112,7 +117,7 @@ main .form-control
 .resources li a{
     display: inline-block;
     text-decoration: none;
-    color: wheat;
+    color: whitesmoke;
     font-size: 15px;
     font-family: 'Nanum Gothic', sans-serif; /* 'Open Sans Condensed', sans-serif;*/
     padding: 1px 6px;

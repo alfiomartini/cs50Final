@@ -1,5 +1,7 @@
 from cs50 import SQL
 from helpers import shorten_title
+from flask import session
+
 
 class MySQL(SQL):
     def __init__(self, dbpath):
@@ -18,6 +20,7 @@ class MySQL(SQL):
                             where user_id = ? and 
                             (title like ? or lower(categ_name) like ?
                             or lower(description) like ?)'''
+        self.user_id = None
 
     def set_userid(self, user_id):
         self.user_id = user_id
@@ -42,6 +45,8 @@ class MySQL(SQL):
             #print(rows)
             dict = {}
             dict['category'] = shorten_title(cat['cat_name'].lower(), 15)
+            dict['visible'] = session['menu'].getItemStatus(cat['cat_name'])
+            # dict['visible'] = viewMenu.getItemStatus(cat['cat_name'])
             dict['rows'] = rows
             if rows:
                 bookmarks.append(dict)

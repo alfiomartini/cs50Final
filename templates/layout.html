@@ -79,6 +79,19 @@
                                   data-placement='top'> Category </a>
                             </div>
                         </li>
+                        <li class = "nav-item dropdown"> 
+                            <a  class="nav-link dropdown-toggle"  href="#"
+                                id="navbardrop" data-toggle="dropdown"> 
+                                View</a>
+                            <div class="dropdown-menu bg-dark"> 
+                                <!-- session[menu] is set at /login -->
+                                {% for item in session['menu'].getMenu() %}
+                                    <a class= "dropdown-item text-white" 
+                                    href="{{url_for('view', cat_name=item['name'])}}"> 
+                                    {{item['menu']}} </a> 
+                                {% endfor %}
+                            </div>
+                        </li>
                         <li class="nav-item"><a class="nav-link" href="{{url_for('auth_bp.change')}}"
                             data-toggle='tooltip' title="Change Password" 
                             data-placement='bottom'>Password</a>

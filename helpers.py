@@ -6,9 +6,10 @@ from flask import redirect, render_template, request, session
 from functools import wraps
 
 
-def shorten_title(title, size):
-    short = title.lower().capitalize()[:size]
-    if len(title) > size:
+def shorten_title(name, size):
+    # using slice notation [:]
+    short = name.lower().title()[0:size]
+    if len(name) > size:
         short += '...'
     return short
 

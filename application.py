@@ -1,12 +1,13 @@
 import os
 from flask import Flask, render_template, session
-from flask import url_for
+from flask import url_for, redirect
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
  
 from helpers import login_required, apology
 from database import mydb
+
 
 from auth.auth_bp import auth_bp
 from edit.edit_bp import edit_bp
@@ -66,6 +67,17 @@ def index():
     categories = mydb.select_cats()
     bookmarks = mydb.build_bookmarks(categories)
     return render_template('index.html', bookmarks=bookmarks)
+
+@app.route('/view/<string:cat_name>', methods=['GET'])
+@login_required
+def view(cat_name):
+    # print(f"Hello {cat_name}")
+    truthy = session['menu'].getItemStatus(cat_name)
+    if truthy:
+        session['menu'].setChecked(cat_name, False)
+    else:
+        session['menu'].setChecked(cat_name, True)
+    return redirect('/')
   
 def errorhandler(e):
     """Handle error"""
