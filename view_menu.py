@@ -13,7 +13,8 @@ class View():
             catDict = {}
             catDict['name'] = cat['cat_name']
             catDict['checked'] = True 
-            catDict['menu'] = '[On]' + shorten_title(cat['cat_name'], 15)
+            catDict['menu_item'] =  shorten_title(cat['cat_name'], 15)
+            catDict['status'] = '[ On ]'
             catsMenu.append(catDict)
         return catsMenu
 
@@ -22,9 +23,9 @@ class View():
             if item['name'].lower() == name.lower():
                 item['checked'] = truthy
                 if truthy:
-                    item['menu'] = '[On]' + shorten_title(item['name'], 15)
+                    item['status'] = '[ On ]'
                 else:
-                    item['menu'] = '[Off]' + shorten_title(item['name'], 15)
+                    item['status'] = '[ Off ]'
                 break
 
     def getMenu(self):

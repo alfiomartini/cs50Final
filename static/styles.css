@@ -138,3 +138,9 @@ main .form-control
     white-space: pre-wrap;
     text-align: justify;
 } 
+
+/* View Menu */
+
+.status{
+    padding-right: 10px;
+}

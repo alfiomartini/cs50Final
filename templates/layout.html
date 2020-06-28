@@ -88,7 +88,7 @@
                                 {% for item in session['menu'].getMenu() %}
                                     <a class= "dropdown-item text-white" 
                                     href="{{url_for('view', cat_name=item['name'])}}"> 
-                                    {{item['menu']}} </a> 
+                                    <span class="status"> {{item['status']}}</span> {{item['menu_item']}} </a> 
                                 {% endfor %}
                             </div>
                         </li>
