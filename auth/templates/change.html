@@ -27,8 +27,8 @@
     </form>
 {% endblock %}
 {% block scripts %}
-<script src="/static/hide_class.js"></script>
-<script src="/static/modal_class.js"></script>
+<script src="{{url_for('static', filename='hide_class.js')}}"></script>
+<script src="{{url_for('static', filename='modal_class.js')}}"></script>
 <script src="{{url_for('auth_bp.static', filename='change.js')}}"></script>
 {% endblock %}
 

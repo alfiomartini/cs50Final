@@ -28,10 +28,11 @@
         <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
         
         <!-- https://favicon.io/emoji-favicons/ -->
-        <link href="/static/favicon-bookmark.ico" rel="icon">
+        <link href="{{url_for('static', filename='favicon-bookmark.ico')}}" rel="icon">
+        <!-- <link href="/static/favicon-bookmark.ico" rel="icon"> -->
 
-        <link href="/static/styles.css" rel="stylesheet">
-         
+        <!-- <link href="/static/styles.css" rel="stylesheet"> -->
+        <link href="{{url_for('static', filename='styles.css')}}" rel="stylesheet">
         <!-- local scripts -->
         <title>{% block title %}{% endblock %}</title>
     </head>
@@ -107,9 +108,9 @@
                     <ul class="navbar-nav ml-auto mt-2">
                         <li class="nav-item"><a class="nav-link" href="{{url_for('auth_bp.logout')}}">Log Out</a></li>
                     </ul>
-                    <script src="/static/tooltip_init.js" defer></script>
-                    <script src="/static/search.js" defer></script> 
-                    <script src="/static/view.js"></script>
+                    <script src="{{url_for('static', filename='tooltip_init.js')}}" defer></script>
+                    <script src="{{url_for('static', filename='search.js')}}" defer></script> 
+                    <script src="{{url_for('static', filename='view.js')}}" defer></script>
                 {% else %}
                     <ul class="navbar-nav ml-auto mt-2">
                         <li class="nav-item"><a class="nav-link" href="{{url_for('auth_bp.register')}}">Register</a></li>

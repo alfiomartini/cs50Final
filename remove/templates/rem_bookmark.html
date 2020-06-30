@@ -29,6 +29,6 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="/static/modal_class.js"></script>
+<script src="{{url_for('static', filename='modal_class.js')}}"></script>
 <script src="{{url_for('remove_bp.static', filename='rem_bookmark.js')}}"></script>
 {% endblock %}

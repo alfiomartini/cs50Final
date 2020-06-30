@@ -75,7 +75,7 @@ class MySQL(SQL):
 
 # environ variable CS50FINAL_DB_URL = sqlite:///database/cs50final.db
 #mydb = MySQL(os.getenv("CS50FINAL_DB_URL"))
-#mydb = MySQL("sqlite:///database/cs50final.db")
+# mydb = MySQL("sqlite:///database/cs50final.db")
 
 # For Heroku deployment
 mydb = MySQL("postgres://mtztrmkrqbfvgp:1260311e94b8d2608be808433512f8d34dc623526e61ad1f04c2e3336b3a0f8a@ec2-52-202-66-191.compute-1.amazonaws.com:5432/d30b48o0gtbpnp")

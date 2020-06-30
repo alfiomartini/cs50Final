@@ -37,6 +37,6 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="/static/modal_class.js"></script>
+<script src="{{url_for('static', filename='modal_class.js')}}"></script>
 <script src="{{url_for('newbm_bp.static', filename='create.js')}}"></script>
 {% endblock %}

@@ -42,7 +42,7 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="/static/modal_class.js"></script>
-<script src="/static/edit_id.js"></script>
+<script src="{{url_for('static', filename='modal_class.js')}}"></script>
+<script src="{{url_for('static', filename='edit_id.js')}}"></script>
 {% endblock %}
  
