@@ -76,11 +76,11 @@ def index():
 @login_required
 def view(cat_name):
     # print(f"Hello {cat_name}")
-    truthy = session['menu'].getItemStatus(cat_name)
+    truthy = session.get('menu').getItemStatus(cat_name)
     if truthy:
-        session['menu'].setChecked(cat_name, False)
+        session.get('menu']).setChecked(cat_name, False)
     else:
-        session['menu'].setChecked(cat_name, True)
+        session.get('menu').setChecked(cat_name, True)
     return redirect(url_for('index'))
   
 def errorhandler(e):
