@@ -1,6 +1,7 @@
 from cs50 import SQL
 from helpers import shorten_title
 from flask import session
+import os
 
 
 class MySQL(SQL):
@@ -70,7 +71,8 @@ class MySQL(SQL):
         return bookmarks
 
 
-mydb = MySQL("sqlite:///database/cs50final.db")
+# environ variable CS50FINAL_DB_URL = sqlite:///database/cs50final.db
+mydb = MySQL(os.getenv(CS50FINAL_DB_URL))
          
 # enables foreign key constraints at runtime
 #db.execute('PRAGMA foreign_keys = ON')
