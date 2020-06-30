@@ -55,7 +55,7 @@ def after_request(response):
 # The user of mkdtemp() is responsible for deleting the temporary directory and its 
 # contents when done with it.
 
-app.config["SESSION_FILE_DIR"] = mkdtemp()
+# app.config["SESSION_FILE_DIR"] = mkdtemp()
 # session is cleared after exiting the browser
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
