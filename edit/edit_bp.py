@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request
-from flask import flash, redirect, session
+from flask import flash, redirect, session, url_for
 from helpers import login_required
 from database import mydb
 
@@ -51,4 +51,4 @@ def apply():
                       category, session['user_id'], title, url, 
                       description, bookmark_id)
         flash(f'Bookmark with Title: {title} edited.')
-        return redirect('/')
+        return redirect(url_for('index'))

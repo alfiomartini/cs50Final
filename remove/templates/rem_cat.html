@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block main %}
-    <form action="/rem_cat_name" method="post" id="form-cat">
+    <form action="{{url_for('remove_bp.rem_cat_name')}}" method="post" id="form-cat">
         <div class="form-group">
             <select name='known' class="form-control bg-secondary text-white" 
             id="known" onchange="">
@@ -25,5 +25,5 @@
 
 {% block scripts %}
 <script src="/static/modal_class.js"></script>
-<script src="/static/rem_cat.js"></script>
+<script src="{{url_for('remove_bp.static', filename='rem_cat.js')}}"></script>
 {% endblock %}

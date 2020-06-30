@@ -2,6 +2,7 @@ import os
 import requests
 import urllib.parse
 
+from flask import url_for
 from flask import redirect, render_template, request, session
 from functools import wraps
 
@@ -27,6 +28,6 @@ def login_required(f):
     def wrapper(*args, **kwargs):
         # We use session.get("user_id") to check if the key exists in the session.
         if session.get("user_id") is None:
-            return redirect("/login")
+            return redirect(url_for('auth_bp.login'))
         return f(*args, **kwargs)
     return wrapper

@@ -1,4 +1,4 @@
-function remove(anchor){
+function remove(anchor){ 
   let container = document.getElementById('modal-div');
   let modal = new Prompt('');
   modal.setPrompt(`Are you sure you want it removed?`);

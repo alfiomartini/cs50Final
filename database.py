@@ -8,7 +8,7 @@ class MySQL(SQL):
     def __init__(self, dbpath):
         super().__init__(dbpath)
         self.sql_cats = '''select cat_name from categories 
-                    where user_id = ? 
+                    where user_id = ?
                     order by cat_name'''
         self.sql_bookms = '''select bookmarks.id as bid, cat_name, 
                     title, url, description 
@@ -29,6 +29,7 @@ class MySQL(SQL):
     def  select_cats(self):
         categories = []
         cat_names = self.execute(self.sql_cats, self.user_id)
+        print(cat_names)
         for name in cat_names:
             categories.append(name)
         return categories
@@ -49,8 +50,9 @@ class MySQL(SQL):
             dict['visible'] = session['menu'].getItemStatus(cat['cat_name'])
             # dict['visible'] = viewMenu.getItemStatus(cat['cat_name'])
             dict['rows'] = rows
-            if rows:
-                bookmarks.append(dict)
+            # if rows:
+            #     bookmarks.append(dict)
+            bookmarks.append(dict)
         return bookmarks
 
     def build_search(self, term_list):

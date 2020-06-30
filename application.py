@@ -61,6 +61,8 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
+# see: https://stackoverflow.com/questions/57691525/redirects-not-working-properly-on-heroku-but-they-do-on-localhost
+
 @app.route("/")
 @login_required
 def index():
@@ -77,7 +79,7 @@ def view(cat_name):
         session['menu'].setChecked(cat_name, False)
     else:
         session['menu'].setChecked(cat_name, True)
-    return redirect('/')
+    return redirect(url_for('index'))
   
 def errorhandler(e):
     """Handle error"""

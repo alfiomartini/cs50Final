@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, request
-from flask import flash, redirect, session
+from flask import flash, redirect, session, url_for
 from helpers import login_required
 from database import mydb
+from view_menu import View
  
 
 remove_bp = Blueprint('remove_bp', __name__, template_folder='templates',
@@ -28,10 +29,13 @@ def rem_cat_name():
             mydb.execute('delete from categories where cat_name = ? and user_id = ?', 
                     (name, session['user_id']))
             flash(f'Category: {name} and all its posts removed')
-            return redirect('/')
+            # update session['menu']
+            viewMenu = View()
+            session['menu'] = viewMenu
+            return redirect(url_for('index'))
         else:
             flash(f'Category: {name} is unknown')
-            return redirect('/')
+            return redirect(url_for('index'))
 
     
 
@@ -55,4 +59,7 @@ def rem_book_id(id):
     title = rows[0]['title']
     mydb.execute('delete from bookmarks where id = ?', (bid,))
     flash(f'Bookmark with Title: {title} removed.')
-    return ('/')
+    # update session['menu']
+    viewMenu = View()
+    session['menu'] = viewMenu
+    return (url_for('index'))

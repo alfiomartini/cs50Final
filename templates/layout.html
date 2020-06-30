@@ -60,7 +60,7 @@
                         returning false simply says to the browser that the button has not been clicked -->
                     </form>
                     <ul class="navbar-nav mr-auto mt-2">
-                        <li class="nav-item"><a class="nav-link" href="/create"
+                        <li class="nav-item"><a class="nav-link" href="{{url_for('newbm_bp.create')}}"
                             data-toggle='tooltip' title="New Bookmark" data-placement='bottom'>
                             New</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{url_for('edit_bp.edit')}}" 
@@ -69,12 +69,17 @@
                         <li class = "nav-item dropdown"> 
                             <a  class="nav-link dropdown-toggle"  href="#"
                                 id="navbardrop" data-toggle="dropdown"> 
-                                Remove</a>
+                                <span data-toggle='tooltip' title="Delete Bookmarks/Categories" data-placement='bottom'>
+                                    Remove
+                                </span></a>
+                            </a>
                             <div class="dropdown-menu"> 
-                                <a class= "dropdown-item text-white" href="/rem_bookmark"
+                                <a class= "dropdown-item text-white" 
+                                    href="{{url_for('remove_bp.rem_bookmark')}}"
                                     data-toggle='tooltip' title="Delete Bookmark" data-placement='top'> 
                                     Bookmark </a> 
-                                <a class= "dropdown-item text-white" href="/rem_cat"
+                                <a class= "dropdown-item text-white" 
+                                    href="{{url_for('remove_bp.rem_cat')}}"
                                   data-toggle='tooltip' title="Delete Category and its Bookmarks" 
                                   data-placement='top'> Category </a>
                             </div>
@@ -82,7 +87,9 @@
                         <li class = "nav-item dropdown"> 
                             <a  class="nav-link dropdown-toggle"  href="#"
                                 id="navbardrop" data-toggle="dropdown"> 
-                                View</a>
+                                <span data-toggle='tooltip' title="Select Categories" data-placement='bottom'>
+                                    View
+                                </span></a>
                             <div class="dropdown-menu"> 
                                 <!-- session[menu] is set at /login -->
                                 {% for item in session['menu'].getMenu() %}

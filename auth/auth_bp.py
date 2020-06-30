@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request
-from flask import flash, redirect, session
+from flask import flash, redirect, session, url_for
 from helpers import apology, login_required
 from database import mydb
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -44,13 +44,12 @@ def login():
     
         # get view menu
         viewMenu = View()
-        # session['menu'] = viewMenu.getMenu()
         session['menu'] = viewMenu
-        print('session[menu]:', session['menu'])
+        #print('session[menu]:', session['menu'])
 
         # Redirect user to home page
         flash('You are now logged in')
-        return redirect("/")
+        return redirect(url_for('index'))
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
@@ -65,7 +64,7 @@ def logout():
     session.clear()
 
     # Redirect user to login form
-    return redirect("/")
+    return redirect(url_for('index'))
 
 @auth_bp.route("/register", methods=["GET", "POST"])
 def register():
@@ -93,7 +92,7 @@ def register():
             mydb.execute('insert into users(name, password) values(?,?)', 
                            username, hash_passw)
             flash("You are registered.")
-            return redirect('/login')
+            return redirect(url_for('auth_bp.login'))
     else:
         return render_template('register.html')
 
@@ -119,7 +118,7 @@ def change():
         # update database with new user password 
         mydb.execute('update users set hash = ? where id = ?',
                     (newhash, session['user_id'],))
-        return redirect('/logout')
+        return redirect(url_for('auth_bp.logout'))
     else:
         return render_template('change.html')
 

@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block main %}
-    <form action="/apply" method="post" onsubmit="">
+    <form action="{{url_for('edit_bp.apply')}}" method="post" onsubmit="">
         <div class="form-group">
             <select name='known' class="form-control bg-secondary text-white" 
             id="known" onchange="">

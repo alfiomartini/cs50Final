@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block main %}
-<form action="/create" method="post" onsubmit="">
+<form action="{{url_for('newbm_bp.create')}}" method="post" onsubmit="">
     <div class="form-group">
         <select name='known' class="form-control bg-secondary text-white" id="known">
             <option disabled selected value="">Categories</option>
