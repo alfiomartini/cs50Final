@@ -78,7 +78,7 @@ def view(cat_name):
     # print(f"Hello {cat_name}")
     truthy = session.get('menu').getItemStatus(cat_name)
     if truthy:
-        session.get('menu']).setChecked(cat_name, False)
+        session.get('menu').setChecked(cat_name, False)
     else:
         session.get('menu').setChecked(cat_name, True)
     return redirect(url_for('index'))
