@@ -1,5 +1,5 @@
 import os
-import redis
+# import redis
 from flask import Flask, render_template, session
 from flask import url_for, redirect
 from flask_session import Session
