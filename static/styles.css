@@ -144,3 +144,12 @@ main .form-control
 .status{
     padding-right: 10px;
 }
+
+.dropdown-menu{
+    background-color:#200f21 !important;
+}
+
+.dropdown-menu .dropdown-item:hover{
+    color: #200f21 !important;
+    background-color: whitesmoke !important;
+}

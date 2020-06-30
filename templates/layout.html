@@ -70,7 +70,7 @@
                             <a  class="nav-link dropdown-toggle"  href="#"
                                 id="navbardrop" data-toggle="dropdown"> 
                                 Remove</a>
-                            <div class="dropdown-menu bg-dark"> 
+                            <div class="dropdown-menu"> 
                                 <a class= "dropdown-item text-white" href="/rem_bookmark"
                                     data-toggle='tooltip' title="Delete Bookmark" data-placement='top'> 
                                     Bookmark </a> 
@@ -83,12 +83,12 @@
                             <a  class="nav-link dropdown-toggle"  href="#"
                                 id="navbardrop" data-toggle="dropdown"> 
                                 View</a>
-                            <div class="dropdown-menu bg-dark"> 
+                            <div class="dropdown-menu"> 
                                 <!-- session[menu] is set at /login -->
                                 {% for item in session['menu'].getMenu() %}
                                     <a class= "dropdown-item text-white" 
                                     href="{{url_for('view', cat_name=item['name'])}}"> 
-                                    <span class="status"> {{item['status']}}</span> {{item['menu_item']}} </a> 
+                                    <span class="status">{{item['status']}}</span> {{item['menu_item']}} </a> 
                                 {% endfor %}
                             </div>
                         </li>
@@ -102,6 +102,7 @@
                     </ul>
                     <script src="/static/tooltip_init.js" defer></script>
                     <script src="/static/search.js" defer></script> 
+                    <script src="/static/view.js"></script>
                 {% else %}
                     <ul class="navbar-nav ml-auto mt-2">
                         <li class="nav-item"><a class="nav-link" href="{{url_for('auth_bp.register')}}">Register</a></li>
