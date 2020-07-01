@@ -51,14 +51,6 @@
                         <input autocomplete="off" autofocus placeholder="Search" 
                         class = "form-control mr-sm-2 mt-2" type="text" name="bookmark" 
                         id = 'search-input' required>
-                        <!--
-                        <button type="submit" class="btn btn-primary  mr-sm-2 mt-2" 
-                        onclick="return false;"> 
-                        Search
-                        </button> -->
-                        <!-- return false here is essential, because  after execution of the event handler,
-                        i.e. of evalForm, the default behaviour of refreshing the page, takes place
-                        returning false simply says to the browser that the button has not been clicked -->
                     </form>
                     <ul class="navbar-nav mr-auto mt-2">
                         <li class="nav-item"><a class="nav-link" href="{{url_for('newbm_bp.create')}}"
@@ -92,7 +84,6 @@
                                     View
                                 </span></a>
                             <div class="dropdown-menu"> 
-                                <!-- session[menu] is set at /login -->
                                 {% for item in menu %}
                                     <a class= "dropdown-item text-white" 
                                     href="{{url_for('view', cat_name=item['name'])}}"> 

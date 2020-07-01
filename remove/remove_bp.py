@@ -55,7 +55,4 @@ def rem_book_id(id):
     title = rows[0]['title']
     mydb.execute('delete from bookmarks where id = ?', (bid,))
     flash(f'Bookmark with Title: {title} removed.')
-    # update session['menu']
-    # viewMenu = View()
-    # session['menu'] = viewMenu
     return (url_for('index'))
