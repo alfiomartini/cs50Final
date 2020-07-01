@@ -94,6 +94,7 @@ class MySQL(SQL):
 
     def setChecked(self, name, truthy):
         for item in self.menu:
+            print(item['name'].lower(), name.lower())
             if item['name'].lower() == name.lower():
                 item['checked'] = truthy
                 if truthy:
