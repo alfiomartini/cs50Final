@@ -84,6 +84,7 @@ def index():
 def view(cat_name):
     # print(f"Hello {cat_name}")
     truthy = mydb.getItemStatus(cat_name)
+    print('truty:', truthy)
     if truthy:
         mydb.setChecked(cat_name, False)
     else:
