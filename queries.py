@@ -100,6 +100,7 @@ class MySQL(SQL):
                     item['status'] = '[ On ]'
                 else:
                     item['status'] = '[ Off ]'
+                print('Item Checked', item['name'], item['checked'], item['status'])
                 break
 
     def getMenu(self):
@@ -108,6 +109,7 @@ class MySQL(SQL):
     def getItemStatus(self, name):
         for item in self.menu:
             if item['name'].lower() == name.lower():
+                print('Item Status', item['name'], item['checked'])
                 return item['checked']
          
      

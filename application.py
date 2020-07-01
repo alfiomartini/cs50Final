@@ -70,7 +70,7 @@ def after_request(response):
 @app.route("/")
 @login_required
 def index():
-    print(session['user_id'])
+    # print(session['user_id'])
     menu = mydb.getMenu()
     # print(menu)
     categories = mydb.select_cats()
@@ -84,6 +84,7 @@ def index():
 def view(cat_name):
     # print(f"Hello {cat_name}")
     truthy = mydb.getItemStatus(cat_name)
+    print(session['user_id'])
     print('truty:', truthy)
     if truthy:
         mydb.setChecked(cat_name, False)
