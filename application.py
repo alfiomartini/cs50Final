@@ -2,7 +2,7 @@ import os
 # import redis
 from flask import Flask, render_template, session
 from flask import url_for, redirect
-from flask_session import Session
+# from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
  
@@ -17,6 +17,8 @@ from newbm.newbm_bp import newbm_bp
 
 # Configure application
 app = Flask(__name__)
+# app.secret_key = b'_5#y2L"F4Q8z\n\xec]/12348backand753j#$%'
+app.secret_key = os.getenv("SESSION_KEY")
 app.register_blueprint(auth_bp)
 app.register_blueprint(edit_bp)
 app.register_blueprint(remove_bp)
@@ -57,10 +59,10 @@ def after_request(response):
 
 # app.config["SESSION_FILE_DIR"] = mkdtemp()
 # session is cleared after exiting the browser
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem"
+# app.config["SESSION_PERMANENT"] = False
+# app.config["SESSION_TYPE"] = "filesystem"
 # app.config["SESSION_TYPE"] = "redis"
-Session(app)
+# Session(app)
 
 # see: https://stackoverflow.com/questions/57691525/redirects-not-working-properly-on-heroku-but-they-do-on-localhost
 

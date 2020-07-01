@@ -2,6 +2,9 @@ from queries import MySQL
 import os
 
 #mydb = MySQL("sqlite:///database/cs50final.db")
+
+# Some testing
+
 # mydb.set_userid(1)
 # mydb.catsMenu() # initialize mydb.menu
 # cats = mydb.select_cats()
@@ -23,6 +26,7 @@ import os
 # For Heroku deployment
 mydb = MySQL(os.getenv("DATABASE_URL"))
          
+
 # enables foreign key constraints at runtime
 #db.execute('PRAGMA foreign_keys = ON')
 
