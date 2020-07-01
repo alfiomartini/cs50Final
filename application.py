@@ -17,8 +17,9 @@ from newbm.newbm_bp import newbm_bp
 
 # Configure application
 app = Flask(__name__)
-# app.secret_key = b'_5#y2L"F4Q8z\n\xec]/12348backand753j#$%'
+ 
 app.secret_key = os.getenv("SESSION_KEY")
+
 app.register_blueprint(auth_bp)
 app.register_blueprint(edit_bp)
 app.register_blueprint(remove_bp)
@@ -34,19 +35,19 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 # Ensure responses aren't cached
 # see https://roadmap.sh/guides/http-caching
 # see https://pythonise.com/series/learning-flask/python-before-after-request
-@app.after_request
-def after_request(response):
-    # Cache-Control specifies how long and in what manner should the content be cached. 
-    # no-store specifies that the content is not to be cached by any of the caches
-    # (public, private, server)
-    # must-revalidate avoids that. If this directive is present, it means that stale content 
-    # cannot be served in any case and the data must be re-validated from the server before serving.
-    # no-cache indicates that the cache can be maintained but the cached content is to be re-validated 
-    # (using ETag for example) from the server before being served. 
-    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    # how long a cache content should be considered fresh? never.
-    response.headers["Expires"] = 0
-    return response
+# @app.after_request
+# def after_request(response):
+#     # Cache-Control specifies how long and in what manner should the content be cached. 
+#     # no-store specifies that the content is not to be cached by any of the caches
+#     # (public, private, server)
+#     # must-revalidate avoids that. If this directive is present, it means that stale content 
+#     # cannot be served in any case and the data must be re-validated from the server before serving.
+#     # no-cache indicates that the cache can be maintained but the cached content is to be re-validated 
+#     # (using ETag for example) from the server before being served. 
+#     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+#     # how long a cache content should be considered fresh? never.
+#     response.headers["Expires"] = 0
+#     return response
 
  
 
@@ -69,8 +70,9 @@ def after_request(response):
 @app.route("/")
 @login_required
 def index():
+    print(mydb.user_id)
     menu = mydb.getMenu()
-    # print(menu)
+    print(menu)
     categories = mydb.select_cats()
     bookmarks = mydb.build_bookmarks(categories)
     return render_template('index.html', bookmarks=bookmarks, menu=menu)
