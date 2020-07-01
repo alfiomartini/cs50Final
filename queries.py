@@ -24,16 +24,7 @@ class MySQL(SQL):
                             (title like ? or lower(categ_name) like ?
                             or lower(description) like ?)'''
         # self.user_id = None
-        self.menu = []
-        # it does not work, because when the method bellow is 
-        # called, self.user_id = None
-        # self.catsMenu()
-
-    # def set_userid(self, user_id):
-    #     self.user_id = user_id
-
-    # def get_userid(self):
-    #     return self.user_id 
+        self.menu = [] 
 
     def select_cats(self):
         categories = []
