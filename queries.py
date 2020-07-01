@@ -109,6 +109,5 @@ class MySQL(SQL):
         for item in self.menu:
             if item['name'].lower() == name.lower():
                 return item['checked']
-        return False # have to think about it
-
+         
      
