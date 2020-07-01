@@ -15,7 +15,7 @@ def search(term_list):
     bookmarks = mydb.build_search(term_list)
     if bookmarks:
         html = render_template('search.html', bookmarks=bookmarks[0])
-        #print(html)
+        # print(html)
         return html
     else:
         return ""

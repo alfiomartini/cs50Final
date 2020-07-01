@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request
 from flask import flash, redirect, session, url_for
 from helpers import apology, login_required
 from database import mydb
-from view_menu import View
+
 
 newbm_bp = Blueprint('newbm_bp', __name__, template_folder='templates',
               static_folder='static', static_url_path='/newbm_static')
@@ -25,9 +25,6 @@ def create():
             mydb.execute('insert into categories(cat_name, user_id) values(?,?)', 
                     category, session['user_id'])
         flash(f"Bookmark added to category {category}")
-        # update session['menu']
-        viewMenu = View()
-        session['menu'] = viewMenu
         return redirect(url_for('index'))
     else:
         #print(listCats)

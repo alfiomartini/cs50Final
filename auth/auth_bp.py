@@ -3,7 +3,6 @@ from flask import flash, redirect, session, url_for
 from helpers import apology, login_required
 from database import mydb
 from werkzeug.security import check_password_hash, generate_password_hash
-from view_menu import View
 
 auth_bp = Blueprint('auth_bp', __name__, template_folder='templates',
               static_folder='static', static_url_path='/auth_static')
@@ -38,15 +37,13 @@ def login():
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
-        # print('session[user_id]:', session['user_id'])
+       
         # set user_id in the database
         mydb.set_userid(session['user_id'])
     
-        # get view menu
-        viewMenu = View()
-        session['menu'] = viewMenu
-        #print('session[menu]:', session['menu'])
-
+        # initializes view menu
+        mydb.catsMenu()
+         
         # Redirect user to home page
         flash('You are now logged in')
         return redirect(url_for('index'))

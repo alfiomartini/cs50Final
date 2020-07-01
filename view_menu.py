@@ -42,8 +42,8 @@ class View():
 # viewMenu = View()
 # menu = viewMenu.getMenu()
 # for item in menu:
-#     print(item['menu'])
+#     print(item['menu_item'])
 # viewMenu.setChecked('Computer SciEnce', False)
 # menu = viewMenu.getMenu()
 # for item in menu:
-#     print(item['menu'])
+#     print(item['menu_item'])

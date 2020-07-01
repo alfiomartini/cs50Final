@@ -93,7 +93,7 @@
                                 </span></a>
                             <div class="dropdown-menu"> 
                                 <!-- session[menu] is set at /login -->
-                                {% for item in session.get('menu').getMenu() %}
+                                {% for item in menu %}
                                     <a class= "dropdown-item text-white" 
                                     href="{{url_for('view', cat_name=item['name'])}}"> 
                                     <span class="status">{{item['status']}}</span> {{item['menu_item']}} </a> 

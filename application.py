@@ -9,7 +9,6 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 from helpers import login_required, apology
 from database import mydb
 
-
 from auth.auth_bp import auth_bp
 from edit.edit_bp import edit_bp
 from remove.remove_bp import remove_bp
@@ -68,19 +67,21 @@ Session(app)
 @app.route("/")
 @login_required
 def index():
+    menu = mydb.getMenu()
+    # print(menu)
     categories = mydb.select_cats()
     bookmarks = mydb.build_bookmarks(categories)
-    return render_template('index.html', bookmarks=bookmarks)
+    return render_template('index.html', bookmarks=bookmarks, menu=menu)
 
 @app.route('/view/<string:cat_name>', methods=['GET'])
 @login_required
 def view(cat_name):
     # print(f"Hello {cat_name}")
-    truthy = session.get('menu').getItemStatus(cat_name)
+    truthy = mydb.getItemStatus(cat_name)
     if truthy:
-        session.get('menu').setChecked(cat_name, False)
+        mydb.setChecked(cat_name, False)
     else:
-        session.get('menu').setChecked(cat_name, True)
+        mydb.setChecked(cat_name, True)
     return redirect(url_for('index'))
   
 def errorhandler(e):
@@ -95,5 +96,5 @@ for code in default_exceptions:
     app.errorhandler(code)(errorhandler)
 
 if __name__ == '__main__':
-    # app.run(debug=True)
+    #app.run(debug=True)
     app.run()
