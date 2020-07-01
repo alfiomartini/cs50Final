@@ -70,7 +70,7 @@ def after_request(response):
 @app.route("/")
 @login_required
 def index():
-    print(mydb.user_id)
+    print(session['user_id'])
     menu = mydb.getMenu()
     # print(menu)
     categories = mydb.select_cats()

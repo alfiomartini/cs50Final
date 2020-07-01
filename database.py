@@ -1,4 +1,5 @@
 from queries import MySQL
+from flask import session
 import os
 
 #mydb = MySQL("sqlite:///database/cs50final.db")

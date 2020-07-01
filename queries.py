@@ -18,25 +18,26 @@ class MySQL(SQL):
                     bookmarks.categ_name=categories.cat_name  and 
                     categories.cat_name = ? and users.id = ?
                     order by title'''
-        self.sql_search = '''select id as bid, title, url, description, categ_name from bookmarks 
-                            where user_id = ? and 
+        self.sql_search = '''select id as bid, title, url, description, 
+                          categ_name from  bookmarks 
+                          where user_id = ? and 
                             (title like ? or lower(categ_name) like ?
                             or lower(description) like ?)'''
-        self.user_id = None
+        # self.user_id = None
         self.menu = []
         # it does not work, because when the method bellow is 
         # called, self.user_id = None
         # self.catsMenu()
 
-    def set_userid(self, user_id):
-        self.user_id = user_id
+    # def set_userid(self, user_id):
+    #     self.user_id = user_id
 
-    def get_userid(self):
-        return self.user_id 
+    # def get_userid(self):
+    #     return self.user_id 
 
     def select_cats(self):
         categories = []
-        cat_names = self.execute(self.sql_cats, self.user_id)
+        cat_names = self.execute(self.sql_cats, session['user_id'])
         for name in cat_names:
             categories.append(name)
         return categories
@@ -58,7 +59,7 @@ class MySQL(SQL):
     def build_bookmarks(self, categories):
         bookmarks = []
         for cat in categories:
-            rows = self.execute(self.sql_bookms, (cat['cat_name'], self.user_id))
+            rows = self.execute(self.sql_bookms, (cat['cat_name'], session['user_id']))
             for row in rows:
                 row['short_title'] = shorten_title(row['title'], 25)
                 row['tooltip'] = '<em><u>Category</u></em> : ' + cat['cat_name'].title()\
@@ -76,7 +77,7 @@ class MySQL(SQL):
 
     def build_search(self, term_list):
         bookmarks = []
-        rows = self.execute(self.sql_search, self.user_id, term_list, term_list, term_list)
+        rows = self.execute(self.sql_search, session['user_id'], term_list, term_list, term_list)
         cat_name = 'Search Links'
         for row in rows:
             row['short_title'] = shorten_title(row['title'], 25)

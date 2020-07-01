@@ -39,7 +39,7 @@ def login():
         session["user_id"] = rows[0]["id"]
        
         # set user_id in the database
-        mydb.set_userid(session['user_id'])
+        # mydb.set_userid(session['user_id'])
     
         # initializes view menu
         mydb.catsMenu()
