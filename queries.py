@@ -94,7 +94,7 @@ class MySQL(SQL):
 
     def setChecked(self, name, truthy):
         for item in self.menu:
-            print(item['name'].lower(), name.lower())
+            # print(item['name'].lower(), name.lower())
             if item['name'].lower() == name.lower():
                 item['checked'] = truthy
                 if truthy:
@@ -110,7 +110,7 @@ class MySQL(SQL):
     def getItemStatus(self, name):
         for item in self.menu:
             if item['name'].lower() == name.lower():
-                print('Item Status', item['name'], item['checked'])
+                # print('Item Status', item['name'], item['checked'])
                 return item['checked']
          
      
