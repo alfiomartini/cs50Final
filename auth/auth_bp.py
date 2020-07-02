@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request
 from flask import flash, redirect, session, url_for
 from helpers import apology, login_required
 from database import mydb
+from view_menu import viewMenu
 from werkzeug.security import check_password_hash, generate_password_hash
 
 auth_bp = Blueprint('auth_bp', __name__, template_folder='templates',
@@ -91,7 +92,7 @@ def register():
 @auth_bp.route('/change', methods=['GET', 'POST'])
 @login_required
 def change():
-    menu = mydb.catsMenu()
+    menu = viewMenu.catsMenu()
     if request.method == 'POST':
         # access post parameters
         old = request.form.get('oldpassword')

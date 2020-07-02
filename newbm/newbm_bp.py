@@ -2,6 +2,8 @@ from flask import Blueprint, render_template, request
 from flask import flash, redirect, session, url_for
 from helpers import apology, login_required
 from database import mydb
+from queries import build_bookmarks
+from view_menu import viewMenu
 
 
 newbm_bp = Blueprint('newbm_bp', __name__, template_folder='templates',
@@ -11,7 +13,7 @@ newbm_bp = Blueprint('newbm_bp', __name__, template_folder='templates',
 @newbm_bp.route('/create', methods=["GET", "POST"])
 @login_required
 def create():
-    menu = mydb.catsMenu()
+    menu = viewMenu.catsMenu()
     categories = list(map(lambda x: {'cat_name': x['name']}, menu))
     listCats = list(map(lambda x: x['cat_name'], categories))
     if request.method == 'POST':

@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request
 from flask import flash, redirect, session, jsonify
 from helpers import apology, login_required
 from database import mydb
- 
+from queries import build_search
 
 utils_bp = Blueprint('utils_bp', __name__, template_folder='templates',
               static_folder='static', static_url_path='/utils_static')
@@ -12,7 +12,7 @@ utils_bp = Blueprint('utils_bp', __name__, template_folder='templates',
 def search(term_list):
     term_list = term_list.lower()
     term_list = "%" + term_list + "%" 
-    bookmarks = mydb.build_search(term_list)
+    bookmarks = build_search(mydb, term_list)
     if bookmarks:
         html = render_template('search.html', bookmarks=bookmarks[0])
         # print(html)

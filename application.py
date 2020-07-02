@@ -8,6 +8,9 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
  
 from helpers import login_required, apology
 from database import mydb
+from queries import build_bookmarks
+# from view_menu import catsMenu
+from view_menu import viewMenu
 
 from auth.auth_bp import auth_bp
 from edit.edit_bp import edit_bp
@@ -69,21 +72,22 @@ Session(app)
 @app.route("/")
 @login_required
 def index():
-    menu = mydb.catsMenu()
+    # menu = catsMenu(viewMenu)
+    menu = viewMenu.catsMenu()
     categories = list(map(lambda x: {'cat_name': x['name']}, menu))
-    bookmarks = mydb.build_bookmarks(categories)
+    bookmarks = build_bookmarks(mydb, categories)
     return render_template('index.html', bookmarks=bookmarks, menu=menu)
 
 @app.route('/view/<string:cat_name>', methods=['GET'])
 @login_required
 def view(cat_name):
-    truthy = mydb.getItemStatus(cat_name)
+    truthy = viewMenu.getItemStatus(cat_name)
     print(session['user_id'])
     print('truty:', truthy)
     if truthy:
-        mydb.setChecked(cat_name, False)
+        viewMenu.setChecked(cat_name, False)
     else:
-        mydb.setChecked(cat_name, True)
+        viewMenu.setChecked(cat_name, True)
     return redirect(url_for('index'))
  
 def errorhandler(e):
@@ -97,5 +101,5 @@ for code in default_exceptions:
     app.errorhandler(code)(errorhandler)
 
 if __name__ == '__main__':
-    # app.run(debug=True)
-    app.run()
+    app.run(debug=True)
+    #app.run()

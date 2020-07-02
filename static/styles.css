@@ -106,7 +106,7 @@ main .form-control
 
 
 .book-item h5{
-    margin-left: 5px;
+    margin: 2px 5px;
     font-variant: small-caps;
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-weight: bold;

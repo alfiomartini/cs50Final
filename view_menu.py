@@ -1,41 +1,76 @@
 from database import mydb
 from helpers import shorten_title
-class View():
-    def __init__(self):
-        # {name:cat, checked:bool}
-        self.menu = self.catsMenu()
+from flask import session
 
-    def catsMenu(self):
+# alternative version, as a function instead as of a method
+def catsMenu(view):
         catsMenu = []
-        cats = mydb.select_cats()
-        # print(cats)
+        cats = mydb.execute('''select * from menu where user_id = ? order by cat_name''',
+           (session['user_id'],))
         for cat in cats:
             catDict = {}
             catDict['name'] = cat['cat_name']
-            catDict['checked'] = True 
+            catDict['checked'] = cat['visible']
             catDict['menu_item'] =  shorten_title(cat['cat_name'], 15)
-            catDict['status'] = '[ On ]'
+            if cat['visible'] == 1:
+                catDict['status'] = '[ On ]'
+            else:
+                catDict['status'] = '[ Off ]'
             catsMenu.append(catDict)
+        view.setMenu(catsMenu)
         return catsMenu
+
+
+
+class View():
+    def __init__(self):
+        self.menu = []
+
+    def setMenu(self, menu):
+        self.menu = menu 
+
+    def getMenu(self):
+      return self.menu
+
+    def getItemStatus(self, name):
+        for item in self.menu:
+            if item['name'].lower() == name.lower():
+                return item['checked']
 
     def setChecked(self, name, truthy):
         for item in self.menu:
             if item['name'].lower() == name.lower():
                 item['checked'] = truthy
                 if truthy:
-                    item['status'] = '[ On ]'
+                    visible = 1
                 else:
-                    item['status'] = '[ Off ]'
+                    visible = 0
+                mydb.execute('''update menu set visible = ? where 
+                        cat_name = ? and user_id = ?''', 
+                        visible, name.lower(), session['user_id'])
                 break
 
-    def getMenu(self):
-        return self.menu
+    def catsMenu(self):
+        catsMenu = []
+        cats = mydb.execute('''select * from menu where user_id = ? order by cat_name''',
+           (session['user_id'],))
+        for cat in cats:
+            catDict = {}
+            catDict['name'] = cat['cat_name']
+            catDict['checked'] = cat['visible']
+            catDict['menu_item'] =  shorten_title(cat['cat_name'], 15)
+            if cat['visible'] == 1:
+                catDict['status'] = '[ On ]'
+            else:
+                catDict['status'] = '[ Off ]'
+            catsMenu.append(catDict)
+        self.setMenu(catsMenu)
+        return catsMenu
 
-    def getItemStatus(self, name):
-        for item in self.menu:
-            if item['name'].lower() == name.lower():
-                return item['checked']
-        return False # have to think about it
+
+    
+# instantiate view menu object 
+viewMenu = View()
 
 
 # mydb.set_userid(1) # for testing purposes

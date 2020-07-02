@@ -2,6 +2,8 @@ from flask import Blueprint, render_template, request
 from flask import flash, redirect, session, url_for
 from helpers import login_required
 from database import mydb
+from view_menu import viewMenu
+from queries import build_bookmarks, select_cats
 
 edit_bp = Blueprint('edit_bp', __name__, template_folder='templates',
               static_folder='static', static_url_path='/edit_static')
@@ -9,16 +11,16 @@ edit_bp = Blueprint('edit_bp', __name__, template_folder='templates',
 @edit_bp.route('/edit', methods=['GET', 'POST'])
 @login_required
 def edit():
-    menu = mydb.catsMenu()
+    menu = viewMenu.catsMenu()
     categories = list(map(lambda x: {'cat_name': x['name']}, menu))
-    bookmarks = mydb.build_bookmarks(categories)
+    bookmarks = build_bookmarks(mydb, categories)
     flash('Select the bookmark you want to edit')
     return render_template('edit.html', bookmarks=bookmarks, menu=menu)
 
 @edit_bp.route('/edit_id/<string:id>', methods=['GET'])
 @login_required
 def edit_id(id):
-    menu = mydb.catsMenu()
+    menu = viewMenu.catsMenu()
     categories = list(map(lambda x: {'cat_name': x['name']}, menu))
     bid = int(id)
     rows = mydb.execute('select * from bookmarks where id = ? and user_id = ?',
@@ -40,7 +42,7 @@ def apply():
         bookmark_id = int(request.form.get('bid'))
         # Have to test if the categories changed? Not
         # But if it is a new category, then I have to update categories
-        categories = mydb.select_cats()
+        categories = select_cats(mydb)
         listCats = list(map(lambda x: x['cat_name'], categories))
         if category not in listCats:
             mydb.execute('insert into categories(cat_name, user_id) values(?,?)', 

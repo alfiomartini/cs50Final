@@ -2,6 +2,8 @@ from flask import Blueprint, render_template, request
 from flask import flash, redirect, session, url_for
 from helpers import login_required
 from database import mydb
+from view_menu import viewMenu
+from queries import select_cats, build_bookmarks
  
 
 remove_bp = Blueprint('remove_bp', __name__, template_folder='templates',
@@ -10,7 +12,7 @@ remove_bp = Blueprint('remove_bp', __name__, template_folder='templates',
 @remove_bp.route('/rem_cat', methods=['GET'])
 @login_required
 def rem_cat():
-    menu = mydb.catsMenu()
+    menu = viewMenu.catsMenu()
     categories = list(map(lambda x: {'cat_name': x['name']}, menu))
     listCats = list(map(lambda x: x['cat_name'], categories))
     flash('Warning: Removing a category implies deleting all bookmarks linked to it')
@@ -19,7 +21,7 @@ def rem_cat():
 @remove_bp.route('/rem_cat_name', methods=['POST'])
 @login_required
 def rem_cat_name():
-    categories =  mydb.select_cats()
+    categories =  select_cats(mydb)
     listCats = list(map(lambda x: x['cat_name'], categories))
     if request.method == 'POST':
         name = request.form.get('category')
@@ -41,9 +43,9 @@ def rem_cat_name():
 @remove_bp.route('/rem_bookmark', methods=['GET','POST'])
 @login_required
 def rem_bookmark():
-    menu = mydb.catsMenu()
+    menu = viewMenu.catsMenu()
     categories = list(map(lambda x: {'cat_name': x['name']}, menu))
-    bookmarks = mydb.build_bookmarks(categories)
+    bookmarks = build_bookmarks(mydb, categories)
     #print(bookmarks)
     flash('Select the bookmark you want to remove')
     return render_template('rem_bookmark.html', bookmarks=bookmarks, menu=menu)
