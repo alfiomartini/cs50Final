@@ -14,7 +14,7 @@ mydb = SQL("sqlite:///database/cs50final.db")
          
 
 # enables foreign key constraints at runtime
-#db.execute('PRAGMA foreign_keys = ON')
+mydb.execute('PRAGMA foreign_keys = ON')
 
 
      
