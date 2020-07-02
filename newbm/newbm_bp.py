@@ -22,13 +22,13 @@ def create():
         url = request.form.get('url')
         title = request.form.get('title')
         description = request.form.get('description')
-        mydb.execute('''insert into bookmarks(categ_name, user_id, url, title, description) 
-                   values(?,?,?,?,?)''',category, session['user_id'], url, title, description)
         if category not in listCats:
             mydb.execute('insert into categories(cat_name, user_id) values(?,?)', 
                     category, session['user_id'])
             mydb.execute('insert into menu(cat_name,user_id,visible) values(?,?,?)',
                     category, session['user_id'], 1)
+        mydb.execute('''insert into bookmarks(categ_name, user_id, url, title, description) 
+                   values(?,?,?,?,?)''',category, session['user_id'], url, title, description)
         flash(f"Bookmark added to category {category}")
         return redirect(url_for('index'))
     else:
