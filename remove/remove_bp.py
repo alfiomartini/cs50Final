@@ -28,9 +28,9 @@ def rem_cat_name():
         if name in listCats:
             mydb.execute('delete from bookmarks where categ_name = ? and user_id = ?', 
                     (name, session['user_id']))
-            mydb.execute('delete from categories where cat_name = ? and user_id = ?', 
-                    (name, session['user_id']))
             mydb.execute('delete from menu where cat_name = ? and user_id = ?', 
+                    (name, session['user_id']))
+            mydb.execute('delete from categories where cat_name = ? and user_id = ?', 
                     (name, session['user_id']))
             flash(f'Category: {name} and all its posts removed')
             return redirect(url_for('index'))
