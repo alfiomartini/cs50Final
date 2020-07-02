@@ -9,24 +9,23 @@ edit_bp = Blueprint('edit_bp', __name__, template_folder='templates',
 @edit_bp.route('/edit', methods=['GET', 'POST'])
 @login_required
 def edit():
-    categories = mydb.select_cats()
+    menu = mydb.catsMenu()
+    categories = list(map(lambda x: {'cat_name': x['name']}, menu))
     bookmarks = mydb.build_bookmarks(categories)
-    #print(bookmarks)
     flash('Select the bookmark you want to edit')
-    return render_template('edit.html', bookmarks=bookmarks)
+    return render_template('edit.html', bookmarks=bookmarks, menu=menu)
 
 @edit_bp.route('/edit_id/<string:id>', methods=['GET'])
 @login_required
 def edit_id(id):
+    menu = mydb.catsMenu()
+    categories = list(map(lambda x: {'cat_name': x['name']}, menu))
     bid = int(id)
     rows = mydb.execute('select * from bookmarks where id = ? and user_id = ?',
                       bid, session['user_id'])
-    #print(rows[0])
-    categories =  mydb.select_cats()
     listCats = list(map(lambda x: x['cat_name'], categories))
     html =  render_template('edit_id.html', row=rows[0], 
-                               categories=listCats)
-    #print(html)
+                               categories=listCats, menu=menu)
     return html
 
 @edit_bp.route('/apply', methods=['POST'])
@@ -44,8 +43,10 @@ def apply():
         categories = mydb.select_cats()
         listCats = list(map(lambda x: x['cat_name'], categories))
         if category not in listCats:
-           mydb.execute('insert into categories(cat_name, user_id) values(?,?)', 
+            mydb.execute('insert into categories(cat_name, user_id) values(?,?)', 
                          category, session['user_id'])
+            mydb.execute('insert into menu(cat_name,user_id,visible) values(?,?,?)',
+                    category, session['user_id'], 1)
         mydb.execute('''update bookmarks set categ_name = ?, user_id = ?, 
                       title = ?, url = ?, description = ? where id = ? ''',
                       category, session['user_id'], title, url, 

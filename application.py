@@ -17,7 +17,7 @@ from newbm.newbm_bp import newbm_bp
 
 # Configure application
 app = Flask(__name__)
- 
+  
 # app.secret_key = os.getenv("SESSION_KEY")
 
 app.register_blueprint(auth_bp)
@@ -69,19 +69,14 @@ Session(app)
 @app.route("/")
 @login_required
 def index():
-    # print(session['user_id'])
-    menu = mydb.getMenu()
-    # print(menu)
-    categories = mydb.select_cats()
+    menu = mydb.catsMenu()
+    categories = list(map(lambda x: {'cat_name': x['name']}, menu))
     bookmarks = mydb.build_bookmarks(categories)
-    for bm in bookmarks:
-        print(bm['category'], bm['visible'])
     return render_template('index.html', bookmarks=bookmarks, menu=menu)
 
 @app.route('/view/<string:cat_name>', methods=['GET'])
 @login_required
 def view(cat_name):
-    # print(f"Hello {cat_name}")
     truthy = mydb.getItemStatus(cat_name)
     print(session['user_id'])
     print('truty:', truthy)
@@ -90,13 +85,12 @@ def view(cat_name):
     else:
         mydb.setChecked(cat_name, True)
     return redirect(url_for('index'))
-  
+ 
 def errorhandler(e):
     """Handle error"""
     if not isinstance(e, HTTPException):
         e = InternalServerError()
     return apology(e.name)
-
 
 # Listen for errors
 for code in default_exceptions:

@@ -11,7 +11,8 @@ newbm_bp = Blueprint('newbm_bp', __name__, template_folder='templates',
 @newbm_bp.route('/create', methods=["GET", "POST"])
 @login_required
 def create():
-    categories = mydb.select_cats()
+    menu = mydb.catsMenu()
+    categories = list(map(lambda x: {'cat_name': x['name']}, menu))
     listCats = list(map(lambda x: x['cat_name'], categories))
     if request.method == 'POST':
         # category always case independent
@@ -24,8 +25,10 @@ def create():
         if category not in listCats:
             mydb.execute('insert into categories(cat_name, user_id) values(?,?)', 
                     category, session['user_id'])
+            mydb.execute('insert into menu(cat_name,user_id,visible) values(?,?,?)',
+                    category, session['user_id'], 1)
         flash(f"Bookmark added to category {category}")
         return redirect(url_for('index'))
     else:
         #print(listCats)
-        return render_template('create.html', categories=listCats)
+        return render_template('create.html', categories=listCats, menu=menu)

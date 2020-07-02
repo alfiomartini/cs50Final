@@ -35,14 +35,17 @@ class MySQL(SQL):
 
     def catsMenu(self):
         catsMenu = []
-        cats = self.select_cats()
-        # print(cats)
+        cats = self.execute('''select * from menu where user_id = ? order by cat_name''',
+           (session['user_id'],))
         for cat in cats:
             catDict = {}
             catDict['name'] = cat['cat_name']
-            catDict['checked'] = True 
+            catDict['checked'] = cat['visible']
             catDict['menu_item'] =  shorten_title(cat['cat_name'], 15)
-            catDict['status'] = '[ On ]'
+            if cat['visible'] == 1:
+                catDict['status'] = '[ On ]'
+            else:
+                catDict['status'] = '[ Off ]'
             catsMenu.append(catDict)
         self.menu = catsMenu
         return catsMenu
@@ -85,14 +88,15 @@ class MySQL(SQL):
 
     def setChecked(self, name, truthy):
         for item in self.menu:
-            # print(item['name'].lower(), name.lower())
             if item['name'].lower() == name.lower():
                 item['checked'] = truthy
                 if truthy:
-                    item['status'] = '[ On ]'
+                    visible = 1
                 else:
-                    item['status'] = '[ Off ]'
-                print('Item Checked', item['name'], item['checked'], item['status'])
+                    visible = 0
+                self.execute('''update menu set visible = ? where 
+                      cat_name = ? and user_id = ?''', 
+                      visible, name.lower(), session['user_id'])
                 break
 
     def getMenu(self):
@@ -101,7 +105,6 @@ class MySQL(SQL):
     def getItemStatus(self, name):
         for item in self.menu:
             if item['name'].lower() == name.lower():
-                # print('Item Status', item['name'], item['checked'])
                 return item['checked']
          
      

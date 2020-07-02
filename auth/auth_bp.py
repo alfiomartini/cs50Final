@@ -37,13 +37,7 @@ def login():
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
-       
-        # set user_id in the database
-        # mydb.set_userid(session['user_id'])
-    
-        # initializes view menu
-        mydb.catsMenu()
-         
+        
         # Redirect user to home page
         flash('You are now logged in')
         return redirect(url_for('index'))
@@ -97,6 +91,7 @@ def register():
 @auth_bp.route('/change', methods=['GET', 'POST'])
 @login_required
 def change():
+    menu = mydb.catsMenu()
     if request.method == 'POST':
         # access post parameters
         old = request.form.get('oldpassword')
@@ -117,5 +112,5 @@ def change():
                     (newhash, session['user_id'],))
         return redirect(url_for('auth_bp.logout'))
     else:
-        return render_template('change.html')
+        return render_template('change.html', menu=menu)
 

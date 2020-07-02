@@ -10,10 +10,11 @@ remove_bp = Blueprint('remove_bp', __name__, template_folder='templates',
 @remove_bp.route('/rem_cat', methods=['GET'])
 @login_required
 def rem_cat():
-    categories =  mydb.select_cats()
+    menu = mydb.catsMenu()
+    categories = list(map(lambda x: {'cat_name': x['name']}, menu))
     listCats = list(map(lambda x: x['cat_name'], categories))
     flash('Warning: Removing a category implies deleting all bookmarks linked to it')
-    return render_template('rem_cat.html', categories=listCats)
+    return render_template('rem_cat.html', categories=listCats, menu=menu)
 
 @remove_bp.route('/rem_cat_name', methods=['POST'])
 @login_required
@@ -27,6 +28,8 @@ def rem_cat_name():
                     (name, session['user_id']))
             mydb.execute('delete from categories where cat_name = ? and user_id = ?', 
                     (name, session['user_id']))
+            mydb.execute('delete from menu where cat_name = ? and user_id = ?', 
+                    (name, session['user_id']))
             flash(f'Category: {name} and all its posts removed')
             return redirect(url_for('index'))
         else:
@@ -38,11 +41,12 @@ def rem_cat_name():
 @remove_bp.route('/rem_bookmark', methods=['GET','POST'])
 @login_required
 def rem_bookmark():
-    categories = mydb.select_cats()
+    menu = mydb.catsMenu()
+    categories = list(map(lambda x: {'cat_name': x['name']}, menu))
     bookmarks = mydb.build_bookmarks(categories)
     #print(bookmarks)
     flash('Select the bookmark you want to remove')
-    return render_template('rem_bookmark.html', bookmarks=bookmarks)
+    return render_template('rem_bookmark.html', bookmarks=bookmarks, menu=menu)
 
 
 
