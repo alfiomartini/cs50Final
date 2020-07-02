@@ -10,7 +10,7 @@ import os
 #mydb = MySQL("postgres://mtztrmkrqbfvgp:1260311e94b8d2608be808433512f8d34dc623526e61ad1f04c2e3336b3a0f8a@ec2-52-202-66-191.compute-1.amazonaws.com:5432/d30b48o0gtbpnp")
 
 # For Heroku deployment
-Smydb = MySQL(os.getenv("DATABASE_URL"))
+mydb = SQL(os.getenv("DATABASE_URL"))
          
 
 # enables foreign key constraints at runtime
