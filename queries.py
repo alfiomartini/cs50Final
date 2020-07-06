@@ -28,7 +28,7 @@ def build_bookmarks(db, categories):
     for cat in categories:
         rows = db.execute(sql_bookms, (cat['cat_name'], session['user_id']))
         for row in rows:
-            row['short_title'] = shorten_title(row['title'], 25)
+            row['short_title'] = shorten_title(row['title'], 22)
             row['tooltip'] = '<em><u>Category</u></em> : ' + cat['cat_name'].title()\
                             + '\n' + '<em><u>Title</u></em> : ' + row['title']\
                             + '\n' + '<em><u>Description</u></em> : ' + row['description']\
