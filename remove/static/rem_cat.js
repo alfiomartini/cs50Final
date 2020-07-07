@@ -15,13 +15,8 @@ function listeners(){
 
     function checkSubmit(event){
         event.preventDefault();
-        let container = document.getElementById('modal-div');
-        let modal = new Prompt('');
-        modal.setPrompt(`Are you sure you want it removed?`);
-        container.innerHTML = modal.getPrompt();
-        modal.firePrompt();
-        // this is not ideal, but simple. Improve later, when
-        // a better idea comes
+        let prompt = new Prompt('');
+        prompt.show(`Are you sure you want it removed?`);
         yesBtn = document.getElementById('modal-yes');
         yesBtn.onclick= function(){
             form.submit();

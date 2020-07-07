@@ -3,9 +3,13 @@ document.addEventListener('DOMContentLoaded', listeners)
 function listeners(){
     let inputURL =  document.querySelector("input[name='url']");
     let select = document.querySelector('select');
+    let catched = false;
+    let form = document.getElementById('form-edit');
 
-    inputURL.addEventListener('paste', checkTimeout);
-    inputURL.addEventListener('change', checkURL);
+    // inputURL.addEventListener('paste', checkTimeout);
+    // inputURL.addEventListener('change', checkURL);
+    // $("input[name='url']").on('paste change', checkTimeout);
+    form.addEventListener('submit', checkURL)
     select.addEventListener('change',selectCat);
 
     function checkTimeout(){
@@ -21,7 +25,7 @@ function listeners(){
         there’s no sense in returning true.
     */
    function checkURL(event){
-    let container = document.getElementById('modal-div');
+    event.preventDefault();
     let modal = new Modal('');
     let urlStr = inputURL.value;
     //console.log('url value', urlStr);
@@ -29,20 +33,17 @@ function listeners(){
         url = new URL(urlStr);
     }
     catch(_){
-        modal.setModal(`Invalid url: ${urlStr}`);
-        container.innerHTML = modal.getModal();
-        modal.fireModal();
-        inputURL.value = '';
-        inputURL.focus();
+        modal.show(`Invalid url: ${urlStr}`);
+        // inputURL.value = '';
+        // inputURL.focus();
         return;
     }
     if (!(url.protocol === 'http:' || url.protocol === 'https:')){
-        modal.setModal(`URL protocol must be http: or https: instead of ${url.protocol}`);
-        container.innerHTML = modal.getModal();
-        modal.fireModal();
-        inputURL.value = '';
-        inputURL.focus();
+        modal.show(`URL protocol must be http: or https: instead of ${url.protocol}`);
+        // inputURL.value = '';
+        // inputURL.focus();
     }
+    else form.submit()
 }
 
     function selectCat(){

@@ -9,15 +9,12 @@ function listeners(){
     form.addEventListener('submit', checkPass);
 
     function checkUser(){
-        let container = document.getElementById('modal-div');
         let modal = new Modal('');
         var value = input.value;
         $.get('/check?username='+value, function(data){
             var avail = JSON.parse(data);
             if (!avail) {
-                modal.setModal('Name already in use.');
-                container.innerHTML = modal.getModal();
-                modal.fireModal();
+                modal.show('Name already in use.');
                 input.value= '';
                 input.focus();
             }   
@@ -26,14 +23,11 @@ function listeners(){
 
     function checkPass(event){
         event.preventDefault();
-        let container = document.getElementById('modal-div');
         let modal = new Modal('');
         let pass = document.getElementById('pass');
         let conf = document.getElementById('conf');
         if (pass.value !== conf.value){
-            modal.setModal("Password and confirmation don't match.");
-            container.innerHTML = modal.getModal();
-            modal.fireModal();
+            modal.show("Password and confirmation don't match.");
             pass.value= '';
             conf.value = '';
             pass.focus();

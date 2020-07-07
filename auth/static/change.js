@@ -23,14 +23,11 @@ function listeners(){
 
     function checkPass(event){
         event.preventDefault();
-        let container = document.getElementById('modal-div');
         let modal = new Modal('');
         var newpass = document.getElementById('new');
         var confpass = document.getElementById('conf');
         if (newpass.value !== confpass.value){
-            modal.setModal("Password and confirmation don't match.");
-            container.innerHTML = modal.getModal();
-            modal.fireModal();
+            modal.show("Password and confirmation don't match.");
             newpass.value= '';
             confpass.value = '';
             newpass.focus();

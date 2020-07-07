@@ -1,12 +1,8 @@
 function remove(anchor){ 
-  let container = document.getElementById('modal-div');
-  let modal = new Prompt('');
-  modal.setPrompt(`Are you sure you want it removed?`);
-  container.innerHTML = modal.getPrompt();
-  modal.firePrompt();
-  // this is not ideal, but simple. Improve later, when
-  // a better idea comes
-  yesBtn = document.getElementById('modal-yes');
+  let prompt = new Prompt('');
+  prompt.show(`Are you sure you want it removed?`);
+  let yesBtn = document.getElementById('modal-yes');
+  console.log(yesBtn);
   yesBtn.onclick= function(){
       post_id = anchor.id;
       $.get('rem_book_id/' + post_id, function(data){

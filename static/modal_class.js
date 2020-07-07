@@ -31,6 +31,14 @@ class Modal{
             </div>
         </div>`;
     }
+
+    /* only when layout.html is included */
+    show(message){
+        let container = document.getElementById('modal-div');
+        this.setModal(message);
+        container.innerHTML = this.getModal();
+        this.fireModal();
+    }
      
     getModal(){
         return this._modal;
@@ -94,6 +102,13 @@ class Prompt extends Modal{
         </div>`;
     }
 
+    show(message){
+        let container = document.getElementById('modal-div');
+        this.setPrompt(message);
+        container.innerHTML = this.getPrompt();
+        this.firePrompt();
+    }
+     
     getPrompt(){
         return this._prompt;
     }
