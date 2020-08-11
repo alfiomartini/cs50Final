@@ -78,6 +78,17 @@ def index():
     bookmarks = build_bookmarks(mydb, categories)
     return render_template('index.html', bookmarks=bookmarks, menu=menu)
 
+@app.route('/view_mode', methods=['GET'])
+@login_required
+def view_mode():
+    if session['list_view']:
+        session['list_view'] = False 
+        session['grid_view'] = True
+    else:
+        session['list_view'] = True
+        session['grid_view'] = False
+    return redirect(url_for('index'))
+
 @app.route('/view/<string:cat_name>', methods=['GET'])
 @login_required
 def view(cat_name):

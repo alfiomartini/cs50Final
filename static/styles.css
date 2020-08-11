@@ -1,7 +1,14 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 /* Navbar */
 .navbar{
     position: sticky;
     top: 5px;
+    z-index: 5;
 }
 nav .navbar-brand
 {
@@ -53,7 +60,7 @@ nav .navbar-brand
 /* Global Settings */
 
 body{
-     
+    
     background-color: #160f30;   
 }
 
@@ -154,6 +161,13 @@ main .form-control
 
 /* View Menu */
 
+/* see: https://css-tricks.com/snippets/html/glyphs/ */
+.mode-view::before{
+    content: '\2713';
+    padding-right: 28px;
+    padding-left: 10px;
+}
+
 .status{
     padding-right: 10px;
 }
@@ -165,4 +179,40 @@ main .form-control
 .dropdown-menu .dropdown-item:hover{
     color: #200f21 !important;
     background-color: whitesmoke !important;
+}
+
+/* Grid View */
+
+.wrapper-box{
+    color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    margin-bottom: 20px;
+}
+
+.wrapper-btn{
+    color: black;
+    background-color: whitesmoke;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.wrapper-btn a{
+    text-decoration: none;
+    color: black;
+}
+
+.wrapper-btn:hover,
+.wrapper-btn:hover a{
+    background-color: darkslategray;
+    color: whitesmoke;
+}
+
+.wrapper-box img{
+    width: 100%; 
+    height: 230px;
+    border: 1px lightsteelblue solid;
+    background-size: cover;
+    margin-top: -15px;
 }

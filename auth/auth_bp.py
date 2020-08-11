@@ -38,6 +38,8 @@ def login():
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
+        session["list_view"] = True 
+        session["grid_view"]  = False
         
         # Redirect user to home page
         flash('You are now logged in')

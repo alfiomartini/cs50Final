@@ -84,6 +84,14 @@
                                     View
                                 </span></a>
                             <div class="dropdown-menu"> 
+                                {% if session.grid_view %}
+                                   <a href="{{url_for('view_mode')}}" class="dropdown-item text-white">
+                                       <span class="mode-view">Grid View (toggle) </span> </a>
+                                {% endif %}
+                                {% if session.list_view %}
+                                    <a href="{{url_for('view_mode')}}" class="dropdown-item text-white">
+                                        <span class="mode-view">List View (toggle)</span></a>
+                                {% endif %}
                                 {% for item in menu %}
                                     <a class= "dropdown-item text-white" 
                                     href="{{url_for('view', cat_name=item['name'])}}"> 

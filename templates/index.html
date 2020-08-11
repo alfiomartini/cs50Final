@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block main %}
+    {% if session.list_view %}
     <!-- bootstrap flexbox -->
     <div class="d-flex flex-wrap justify-content-around">
         {% for bookmark in bookmarks %}
@@ -24,6 +25,32 @@
             {% endif %}
         {% endfor %}
     </div> <!-- end flexbox-->
+    {% endif %}
+
+    {% if session.grid_view %}
+    <div class="grid-mode">
+        <div class="row">
+        {% for bookmark in bookmarks %}
+            {% if bookmark['visible'] %}
+                 {% for row in bookmark['rows'] %}
+                    <div class="col-md-4 wrapper-box">
+                        <p class="wrapper-item wrapper-btn">{{bookmark['category']}}</p>
+                        <p class="wrapper-item wrapper-btn">
+                            <a href="{{row['url']}}" data-toggle="tooltip" title="{{row['tooltip']}}" data-placement='right' data-html='true'>{{row['short_title']}}
+                            </a>
+                        </p>
+                        </p><a class="wrapper-item" href="{{row['url']}}" target = "_blank">
+                            <img src="../static/images/bm-small.PNG"  alt="Dropdown Menu">
+                           </a>
+                        </p>
+                    </div>
+                 {% endfor %}
+            {% endif %}
+        {% endfor %}
+        </div>
+    </div>
+    {% endif %}
 {% endblock %}
+
 {% block scripts %}
 {% endblock %}
