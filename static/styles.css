@@ -4,6 +4,16 @@
     padding: 0;
 }
 
+body{
+    background-image: url('/static/images/kevin-laminto-h2VrZPWLhIU-unsplash.jpg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed;
+    height: 100vh;    
+}
+
+
 /* Navbar */
 .navbar{
     position: sticky;
@@ -19,7 +29,7 @@ nav .navbar-brand
 .flashed{
     position: sticky;
     top: 5em;
-    z-index: 10;
+    z-index: 5;
 }
 
 
@@ -128,7 +138,7 @@ main .form-control
 .resources li a{
     display: inline-block;
     text-decoration: none;
-    color: whitesmoke;
+    color: white;
     font-size: 15px;
     font-family: 'Nanum Gothic', sans-serif; /* 'Open Sans Condensed', sans-serif;*/
     padding: 1px 6px;

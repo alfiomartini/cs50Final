@@ -53,30 +53,31 @@
                         id = 'search-input' required>
                     </form>
                     <ul class="navbar-nav mr-auto mt-2">
-                        <li class="nav-item"><a class="nav-link" href="{{url_for('newbm_bp.create')}}"
-                            data-toggle='tooltip' title="New Bookmark" data-placement='bottom'>
-                            New</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{url_for('edit_bp.edit')}}" 
-                            data-toggle='tooltip' title="Edit Bookmarks" 
-                            data-placement='bottom'>Edit</a></li>
                         <li class = "nav-item dropdown"> 
                             <a  class="nav-link dropdown-toggle"  href="#"
                                 id="navbardrop" data-toggle="dropdown"> 
-                                <span data-toggle='tooltip' title="Delete Bookmarks/Categories" data-placement='bottom'>
-                                    Remove
+                                <span data-toggle='tooltip' title="Bookmark Actions" data-placement='bottom'>
+                                    Bookmarks
                                 </span></a>
                             </a>
                             <div class="dropdown-menu"> 
+                                <a class="dropdown-item text-white" href="{{url_for('newbm_bp.create')}}"
+                                    data-toggle='tooltip' title="New Bookmark" data-placement='bottom'>
+                                    New</a>
+                                <a class="dropdown-item text-white" href="{{url_for('edit_bp.edit')}}" 
+                                    data-toggle='tooltip' title="Edit Bookmarks" 
+                                    data-placement='bottom'>Edit</a>
                                 <a class= "dropdown-item text-white" 
                                     href="{{url_for('remove_bp.rem_bookmark')}}"
                                     data-toggle='tooltip' title="Delete Bookmark" data-placement='top'> 
-                                    Bookmark </a> 
+                                    Remove Bookmark </a> 
                                 <a class= "dropdown-item text-white" 
                                     href="{{url_for('remove_bp.rem_cat')}}"
-                                  data-toggle='tooltip' title="Delete Category and its Bookmarks" 
-                                  data-placement='top'> Category </a>
+                                data-toggle='tooltip' title="Delete Category and its Bookmarks" 
+                                data-placement='top'> Remove Category </a>
                             </div>
                         </li>
+                        
                         <li class = "nav-item dropdown"> 
                             <a  class="nav-link dropdown-toggle"  href="#"
                                 id="navbardrop" data-toggle="dropdown"> 

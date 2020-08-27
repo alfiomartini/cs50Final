@@ -37,7 +37,8 @@ def login_required(f):
 
 def getImage(img_url):
     try:
-        resp = requests.get(img_url)
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36'}
+        resp = requests.get(img_url, headers=headers)
         image = Image.open(BytesIO(resp.content))
     except:
         image = None 
@@ -64,7 +65,7 @@ def getImageLink(url):
 
 def saveImage(img_url):
     image = getImage(img_url)
-    if image is not None:
+    if image:
         url_obj = urlparse(img_url)
         img_name = url_obj.netloc + url_obj.path
         img_name = img_name.replace("/", "_")  
@@ -77,21 +78,21 @@ def saveImage(img_url):
 
 def urlImage(db, url):
     img_url = getImageLink(url)
-    if img_url is not None:
+    if img_url:
         img_name = saveImage(img_url)
-        if img_name is not None:
+        if img_name:
             entry = db.execute('select url, image from images where url = ?', (url,))
             if len(entry) == 0:
                 db.execute('insert into images(url, image) values(?,?)', (url, img_name))
             else:
-                if url != entry[0]['url']:
-                    db.execute('update images set url = ?, image = ? where url = ?', (url, img_name))
+                # if url != entry[0]['url']:
+                db.execute('update images set url = ?, image = ? where url = ?', (url, img_name,url))
         else:
-            print('else saveImage')
+            # print('else saveImage')
             img_name = 'bm-small.png' #default_image 
             db.execute('insert into images(url, image) values(?,?)', (url, img_name))
     else: 
-        print('else getImageLink')
+        # print('else getImageLink')
         img_name = 'bm-small.png' #default_image 
         db.execute('insert into images(url, image) values(?,?)', (url, img_name))
 
