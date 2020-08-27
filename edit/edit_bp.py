@@ -1,12 +1,13 @@
 from flask import Blueprint, render_template, request
 from flask import flash, redirect, session, url_for
-from helpers import login_required
+from helpers import login_required, urlImage
 from database import mydb
 from view_menu import viewMenu
 from queries import build_bookmarks, select_cats
 
 edit_bp = Blueprint('edit_bp', __name__, template_folder='templates',
               static_folder='static', static_url_path='/edit_static')
+
 
 @edit_bp.route('/edit', methods=['GET', 'POST'])
 @login_required
@@ -53,5 +54,9 @@ def apply():
                       title = ?, url = ?, description = ? where id = ? ''',
                       category, session['user_id'], title, url, 
                       description, bookmark_id)
+
+        # update image if needed
+        urlImage(mydb, url)
+
         flash(f'Bookmark with Title: {title} edited.')
         return redirect(url_for('index'))

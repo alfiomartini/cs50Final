@@ -36,11 +36,13 @@
                     <div class="col-md-4 wrapper-box">
                         <p class="wrapper-item wrapper-btn">{{bookmark['category']}}</p>
                         <p class="wrapper-item wrapper-btn">
-                            <a href="{{row['url']}}" data-toggle="tooltip" title="{{row['tooltip']}}" data-placement='right' data-html='true'>{{row['short_title']}}
+                            <a href="{{row['url']}}" data-toggle="tooltip" title="{{row['tooltip']}}" data-placement='bottom' data-html='true'>
+                                {{row['short_title']}}
                             </a>
                         </p>
-                        </p><a class="wrapper-item" href="{{row['url']}}" target = "_blank">
-                            <img src="../static/images/bm-small.PNG"  alt="Dropdown Menu">
+                        </p><a class="wrapper-item" href="{{row['url']}}" target = "_blank"
+                             data-toggle="tooltip" title="{{row['url']}}" data-placement='right' data-html='true'>
+                            <img src="../static/preview/{{row['image']}}"  alt="Dropdown Menu">
                            </a>
                         </p>
                     </div>

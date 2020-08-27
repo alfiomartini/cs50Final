@@ -1,4 +1,4 @@
-from helpers import shorten_title
+from helpers import shorten_title, urlImage
 from flask import session
 import os
 from view_menu import viewMenu
@@ -33,6 +33,12 @@ def build_bookmarks(db, categories):
                             + '\n' + '<em><u>Title</u></em> : ' + row['title']\
                             + '\n' + '<em><u>Description</u></em> : ' + row['description']\
                             # + '\n' + '<em><u>Id</u></em>: ' + str(row['bid'])
+            
+            img = db.execute('select image from images where url = ?', row['url'])
+            if len(img) == 0:
+                row['image'] = 'bm-small.png'
+            else:
+                row['image'] = img[0]['image']
         dict = {}
         dict['category'] = shorten_title(cat['cat_name'].lower(), 15)
         dict['visible'] = viewMenu.getItemStatus(cat['cat_name'])
