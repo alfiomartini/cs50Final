@@ -5,14 +5,13 @@
 }
 
 body{
-    background-image: url('/static/images/kevin-laminto-h2VrZPWLhIU-unsplash.jpg');
+    background-image: url('/static/images/stefan-steinbauer-HK8IoD-5zpg-unsplash-minecratf.jpg');
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
     background-attachment: fixed;
     height: 100vh;    
 }
-
 
 /* Navbar */
 .navbar{
@@ -32,6 +31,11 @@ nav .navbar-brand
     z-index: 5;
 }
 
+.flashed .alert{
+    color: black;
+    font-variant: small-caps;
+    font-weight: bold;
+}
 
 .dropdown-menu a:hover{
     background-color:#200f21;
@@ -132,17 +136,24 @@ main .form-control
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-weight: bold;
     padding: 3px 5px;
-    color: lightblue;
+    color: lightsteelblue;
 }
 
 .resources li a{
     display: inline-block;
     text-decoration: none;
-    color: white;
+    color:cyan;
     font-size: 15px;
     font-family: 'Nanum Gothic', sans-serif; /* 'Open Sans Condensed', sans-serif;*/
     padding: 1px 6px;
     width: 220px;
+    font-variant: small-caps;
+}
+
+.edit-container .resources li a,
+.remove-container .resources li a
+ {
+    color: lightgreen;
 }
 
 /* see: https://css-tricks.com/snippets/html/glyphs/ */
