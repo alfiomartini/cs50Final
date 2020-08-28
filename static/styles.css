@@ -183,10 +183,10 @@ main .form-control
 /* View Menu */
 
 /* see: https://css-tricks.com/snippets/html/glyphs/ */
-.mode-view::before{
-    content: '\2713';
-    padding-right: 28px;
-    padding-left: 10px;
+
+.mode-view{
+    display: flex;
+    align-items: center;
 }
 
 .status{
@@ -237,3 +237,5 @@ main .form-control
     background-size: cover;
     margin-top: -15px;
 }
+
+/* Google Icons */

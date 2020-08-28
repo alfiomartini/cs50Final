@@ -31,6 +31,8 @@
         <link href="{{url_for('static', filename='favicon-bookmark.ico')}}" rel="icon">
         <!-- <link href="/static/favicon-bookmark.ico" rel="icon"> -->
 
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
         <!-- <link href="/static/styles.css" rel="stylesheet"> -->
         <link href="{{url_for('static', filename='styles.css')}}" rel="stylesheet">
         <!-- local scripts -->
@@ -86,11 +88,22 @@
                             <div class="dropdown-menu"> 
                                 {% if session.grid_view %}
                                    <a href="{{url_for('view_mode')}}" class="dropdown-item text-white">
-                                       <span class="mode-view">Grid View (toggle) </span> </a>
+                                    <div class="mode-view">
+                                      <i class="material-icons mr-4 ml-2">border_all</i>
+                                      <span class="">
+                                        Grid/List
+                                      </span>
+                                    </div>
                                 {% endif %}
                                 {% if session.list_view %}
                                     <a href="{{url_for('view_mode')}}" class="dropdown-item text-white">
-                                        <span class="mode-view">List View (toggle)</span></a>
+                                      <div class="mode-view">
+                                        <i class="material-icons mr-4 ml-2">format_list_bulleted</i>
+                                        <span class="">
+                                          Grid/List
+                                        </span>
+                                      </div>
+                                    </a>
                                 {% endif %}
                                 {% for item in menu %}
                                     <a class= "dropdown-item text-white" 
