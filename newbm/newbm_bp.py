@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request
 from flask import flash, redirect, session, url_for
-from helpers import apology, login_required
+from helpers import apology, login_required, urlImage
 from database import mydb
 from queries import build_bookmarks
 from view_menu import viewMenu
@@ -29,6 +29,7 @@ def create():
                     category, session['user_id'], 1)
         mydb.execute('''insert into bookmarks(categ_name, user_id, url, title, description) 
                    values(?,?,?,?,?)''',category, session['user_id'], url, title, description)
+        urlImage(mydb, url)
         flash(f"Bookmark added to category {category}")
         return redirect(url_for('index'))
     else:
