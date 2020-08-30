@@ -10,7 +10,7 @@ body{
     background-position: center center;
     background-size: cover;
     background-attachment: fixed;
-    /* height: 100vh;     */
+    height: 100vh;    
 }
 
 /* Navbar */
@@ -72,11 +72,6 @@ nav .navbar-brand
   }
 
 /* Global Settings */
-
-body{
-    
-    background-color: #160f30;   
-}
 
 /* center button */
 #btn-chg{
