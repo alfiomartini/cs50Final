@@ -60,9 +60,9 @@ class View():
             catDict['checked'] = cat['visible']
             catDict['menu_item'] =  shorten_title(cat['cat_name'], 15)
             if cat['visible'] == 1:
-                catDict['status'] = '[ On ]'
+                catDict['status'] = 'visibility'
             else:
-                catDict['status'] = '[ Off ]'
+                catDict['status'] = 'visibility_off'
             catsMenu.append(catDict)
         self.setMenu(catsMenu)
         return catsMenu

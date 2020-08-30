@@ -126,7 +126,13 @@
                                 {% for item in menu %}
                                     <a class= "dropdown-item text-white" 
                                     href="{{url_for('view', cat_name=item['name'])}}"> 
-                                    <span class="status">{{item['status']}}</span> {{item['menu_item']}} </a> 
+                                    <div class="mode-view">
+                                        <i class="material-icons mr-4 ml-2">{{item['status']}}</i>
+                                        <span class="">
+                                            {{item['menu_item']}}
+                                        </span>
+                                    </div>
+                                    </a> 
                                 {% endfor %}
                             </div>
                         </li>
