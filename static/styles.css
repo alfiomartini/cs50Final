@@ -143,7 +143,7 @@ main .form-control
     display: inline-block;
     text-decoration: none;
     color:cyan;
-    font-size: 15px;
+    font-size: 17px;
     font-family: 'Nanum Gothic', sans-serif; /* 'Open Sans Condensed', sans-serif;*/
     padding: 1px 6px;
     width: 220px;
@@ -182,6 +182,9 @@ main .form-control
 
 /* View Menu */
 
+.view-hide{
+    padding-left: 50px ;
+}
 /* see: https://css-tricks.com/snippets/html/glyphs/ */
 
 .mode-view{

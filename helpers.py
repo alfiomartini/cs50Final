@@ -96,10 +96,21 @@ def urlImage(db, url):
         img_name = 'bm-small.png' #default_image 
         db.execute('insert into images(url, image) values(?,?)', (url, img_name))
 
-# img_url = getImageLink('https://www.belladasemana.com.br/pt-br/modelos/marina-brum/video')
-# if img_url is not None:
-#     img_name = saveImage(img_url)
-# else: 
-#     img_name = 'bm-small.png' #default_image
+def processURL(dict):
+    bm = {}
+    bm['category'] = 'Universal'
+    bm['title'] = dict['name']
+    bm['url'] = dict['url']
+    return bm
 
-# print(img_name)
+def processFolder(folder):
+    category = folder['name']
+    bookmarks = []
+    for bm_child in folder['children']:
+        bm={}
+        bm['category'] = category
+        bm['title'] = bm_child['name']
+        bm['url'] = bm_child['url']
+        bookmarks.append(bm)
+    return bookmarks
+

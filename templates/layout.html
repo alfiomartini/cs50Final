@@ -105,6 +105,24 @@
                                       </div>
                                     </a>
                                 {% endif %}
+                                    <a class= "dropdown-item text-white" 
+                                        href="{{url_for('view_all')}}"> 
+                                        <div class="mode-view">
+                                            <i class="material-icons mr-4 ml-2">visibility</i>
+                                            <span class="">
+                                              View All
+                                            </span>
+                                        </div>
+                                    </a>
+                                    <a class= "dropdown-item text-white" 
+                                        href="{{url_for('hide_all')}}"> 
+                                        <div class="mode-view">
+                                            <i class="material-icons mr-4 ml-2">visibility_off</i>
+                                            <span class="">
+                                              Hide All
+                                            </span>
+                                        </div> 
+                                    </a>
                                 {% for item in menu %}
                                     <a class= "dropdown-item text-white" 
                                     href="{{url_for('view', cat_name=item['name'])}}"> 

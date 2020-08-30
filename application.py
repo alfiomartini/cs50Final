@@ -99,6 +99,24 @@ def view(cat_name):
     else:
         viewMenu.setChecked(cat_name, True)
     return redirect(url_for('index'))
+
+@app.route('/view_all', methods=['GET'])
+@login_required
+def view_all():
+    menu = viewMenu.catsMenu()
+    categories = list(map(lambda x: {'cat_name': x['name']}, menu))
+    for cat in categories:
+        viewMenu.setChecked(cat['cat_name'], True)
+    return redirect(url_for('index'))
+
+@app.route('/hide_all', methods=['GET'])
+@login_required
+def hide_all():
+    menu = viewMenu.catsMenu()
+    categories = list(map(lambda x: {'cat_name': x['name']}, menu))
+    for cat in categories:
+        viewMenu.setChecked(cat['cat_name'], False)
+    return redirect(url_for('index'))
  
 def errorhandler(e):
     """Handle error"""
