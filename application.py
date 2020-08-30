@@ -75,6 +75,7 @@ def index():
     menu = viewMenu.catsMenu()
     categories = list(map(lambda x: {'cat_name': x['name']}, menu))
     bookmarks = build_bookmarks(mydb, categories)
+    # print(bookmarks)
     return render_template('index.html', bookmarks=bookmarks, menu=menu)
 
 @app.route('/view_mode', methods=['GET'])
@@ -92,8 +93,8 @@ def view_mode():
 @login_required
 def view(cat_name):
     truthy = viewMenu.getItemStatus(cat_name)
-    # print(session['user_id'])
-    # print('truty:', truthy)
+    print(session['user_id'])
+    print('truty:', truthy)
     if truthy:
         viewMenu.setChecked(cat_name, False)
     else:

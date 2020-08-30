@@ -101,6 +101,7 @@ def processURL(dict):
     bm['category'] = 'Universal'
     bm['title'] = dict['name']
     bm['url'] = dict['url']
+    bm['description'] = 'Not given.'
     return bm
 
 def processFolder(folder):
@@ -111,6 +112,7 @@ def processFolder(folder):
         bm['category'] = category
         bm['title'] = bm_child['name']
         bm['url'] = bm_child['url']
+        bm['description'] = 'Not given.'
         bookmarks.append(bm)
     return bookmarks
 

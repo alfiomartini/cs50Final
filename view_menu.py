@@ -45,6 +45,8 @@ class View():
                     visible = 1
                 else:
                     visible = 0
+                print('user_id', session['user_id'])
+                print('visible', visible)
                 mydb.execute('''update menu set visible = ? where 
                         cat_name = ? and user_id = ?''', 
                         visible, name.lower(), session['user_id'])

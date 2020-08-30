@@ -22,6 +22,7 @@ def build_bookmarks(db, categories):
                 users.id = bookmarks.user_id and 
                 bookmarks.categ_name=categories.cat_name  and 
                 categories.cat_name = ? and users.id = ?
+                group by bid
                 order by title'''
 
     bookmarks = []
@@ -33,7 +34,6 @@ def build_bookmarks(db, categories):
                             + '\n' + '<em><u>Title</u></em> : ' + row['title']\
                             + '\n' + '<em><u>Description</u></em> : ' + row['description']\
                             # + '\n' + '<em><u>Id</u></em>: ' + str(row['bid'])
-            
             img = db.execute('select image from images where url = ?', row['url'])
             if len(img) == 0:
                 row['image'] = 'bm-small.png'

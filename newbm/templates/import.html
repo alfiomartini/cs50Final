@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Import
+{% endblock %}
+
+{% block main %}
+    <!-- enctype="multipart/form-data": No characters are encoded. This value is required when you
+       are using forms that have a file upload control -->
+    <form class="text-white" action="{{url_for('newbm_bp.import_bms')}}" method="post" 
+          enctype="multipart/form-data">
+        <div class="input-group">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="input-file" name='filename' required> 
+            <label class="custom-file-label" for="input-file">Choose file</label>
+          </div>
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="submit">Submit</button>
+          </div>
+        </div>
+    </form>
+
+    <div class="spinner mt-5"></div>
+{% endblock %}
+{% block scripts %}
+<script>
+  let input = document.querySelector('input[type="file"]');
+  input.addEventListener('change', () => {
+     let value = input.files[0].name;
+    //  console.log(value);
+     document.querySelector('label').innerHTML = value;
+  })
+
+  let submit = document.querySelector('button[type="submit"]');
+  submit.addEventListener('click', () => {
+    document.querySelector('.spinner').innerHTML = `<button class="btn btn-primary">
+                <span class="spinner-border spinner-border-sm"></span>
+                Wait a moment. Processing bookmarks...
+                </button>`
+  })
+</script>
+{% endblock %}

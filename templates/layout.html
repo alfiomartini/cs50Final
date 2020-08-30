@@ -74,8 +74,11 @@
                                     Remove Bookmark </a> 
                                 <a class= "dropdown-item text-white" 
                                     href="{{url_for('remove_bp.rem_cat')}}"
-                                data-toggle='tooltip' title="Delete Category and its Bookmarks" 
-                                data-placement='top'> Remove Category </a>
+                                    data-toggle='tooltip' title="Delete Category and its Bookmarks" 
+                                    data-placement='top'> Remove Category </a>
+                                <a class="dropdown-item text-white" href="{{url_for('newbm_bp.import_bms')}}"
+                                data-toggle='tooltip' title="Import from Chrome or Edge" data-placement='bottom'>
+                                Import (Chrome, Edge)</a>
                             </div>
                         </li>
                         
