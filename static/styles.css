@@ -38,7 +38,7 @@ nav .navbar-brand
     font-weight: bold;
 }
 
-.dropdown-menu a:hover{
+.navbar-custom .dropdown-menu{
     background-color:#200f21;
 }
 
@@ -87,16 +87,8 @@ main
     overflow-x: auto;
 }
 
-/* main img
-{
-    max-width: 100%;
-} 
-*/
-
-
 
 /* Forms */
-
 
 .form-group select{
     background-color:#200f21 !important;
