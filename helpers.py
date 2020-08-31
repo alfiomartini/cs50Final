@@ -77,24 +77,30 @@ def saveImage(img_url):
     return img_name
 
 def urlImage(db, url):
+    print('HELLO URL IMAGE')
+    entry = db.execute('select url, image from images where url = ?', (url,))
+    print('entry length', len(entry))
     img_url = getImageLink(url)
     if img_url:
         img_name = saveImage(img_url)
         if img_name:
-            entry = db.execute('select url, image from images where url = ?', (url,))
             if len(entry) == 0:
                 db.execute('insert into images(url, image) values(?,?)', (url, img_name))
             else:
-                # if url != entry[0]['url']:
                 db.execute('update images set url = ?, image = ? where url = ?', (url, img_name,url))
         else:
             # print('else saveImage')
             img_name = 'bm-small.png' #default_image 
-            db.execute('insert into images(url, image) values(?,?)', (url, img_name))
+            if len(entry) == 0:
+                db.execute('insert into images(url, image) values(?,?)', (url, img_name))
+            else:
+                db.execute('update images set url = ?, image = ? where url = ?', (url, img_name,url))
     else: 
-        # print('else getImageLink')
         img_name = 'bm-small.png' #default_image 
-        db.execute('insert into images(url, image) values(?,?)', (url, img_name))
+        if len(entry) == 0:
+            db.execute('insert into images(url, image) values(?,?)', (url, img_name))
+        else:
+            db.execute('update images set url = ?, image = ? where url = ?', (url, img_name,url))
 
 def processURL(dict):
     bm = {}
