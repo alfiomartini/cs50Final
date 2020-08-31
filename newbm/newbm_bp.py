@@ -77,13 +77,14 @@ def import_bms():
                             if child['type'] == 'folder':
                                 categories += processFolder(child)
                         for category in categories:
+                            print('category', category['category'].lower())
+                            print('ListCats', listCats)
                             if category['category'].lower() not in listCats:
-                                # print('category', category['category'])
-                                # print('ListCats', listCats)
                                 mydb.execute('insert into categories(cat_name, user_id) values(?,?)', 
                                         category['category'].lower(), session['user_id'])
                                 mydb.execute('insert into menu(cat_name,user_id,visible) values(?,?,?)',
                                         category['category'].lower(), session['user_id'], 1)
+                                listCats.append(category['category'].lower())
                             if category['url'] in listUrls:
                                 # print('updating bookmarks in import')
                                 mydb.execute('''update bookmarks set categ_name=?, 
