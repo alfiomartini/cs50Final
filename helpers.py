@@ -77,7 +77,6 @@ def saveImage(img_url):
     return img_name
 
 def urlImage(db, url):
-    print('HELLO URL IMAGE')
     entry = db.execute('select url, image from images where url = ?', (url,))
     print('entry length', len(entry))
     img_url = getImageLink(url)
@@ -114,11 +113,12 @@ def processFolder(folder):
     category = folder['name']
     bookmarks = []
     for bm_child in folder['children']:
-        bm={}
-        bm['category'] = category
-        bm['title'] = bm_child['name']
-        bm['url'] = bm_child['url']
-        bm['description'] = 'Not given.'
-        bookmarks.append(bm)
+        if bm_child['type'] == 'url':
+            bm={}
+            bm['category'] = category
+            bm['title'] = bm_child['name']
+            bm['url'] = bm_child['url']
+            bm['description'] = 'Not given.'
+            bookmarks.append(bm)
     return bookmarks
 
