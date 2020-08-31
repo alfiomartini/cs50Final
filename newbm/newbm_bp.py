@@ -77,7 +77,7 @@ def import_bms():
                             if child['type'] == 'folder':
                                 categories += processFolder(child)
                         for category in categories:
-                            if category not in listCats:
+                            if category['category'] not in listCats:
                                     mydb.execute('insert into categories(cat_name, user_id) values(?,?)', 
                                             category['category'].lower(), session['user_id'])
                                     mydb.execute('insert into menu(cat_name,user_id,visible) values(?,?,?)',
