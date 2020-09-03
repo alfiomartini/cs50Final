@@ -9,7 +9,7 @@
     <div class="d-flex flex-wrap justify-content-around remove-container">
         {% for bookmark in bookmarks %}
             {% if bookmark['visible'] %}
-                <div class="book-item mb-3 mr-2 border border-light">
+                <div class="book-item mb-3 mr-2">
                     <h5>{{bookmark['category']}}</h5>
                     <ul class='resources'>
                         {% for row in bookmark['rows'] %}
