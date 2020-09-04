@@ -81,13 +81,6 @@ nav .navbar-brand
 }
 
 
-main
-{
-    /* scroll horizontally as needed */
-    overflow-x: auto;
-}
-
-
 /* Forms */
 
 .form-group select{
@@ -100,10 +93,28 @@ main
     float: left;
 }
  
+
 .grid-container{
     display: grid;
-    grid-template-columns: auto auto auto;
 }
+
+.grid-box{
+    width:90%;
+    margin: 20px auto;
+}
+
+@media (min-width:1023px){
+    .grid-box{
+        margin-right:-50px;
+    }
+}
+
+@media (max-width:500px){
+    .grid-box{
+        margin-right:15px;
+    }
+}
+ 
 .resources{
     font-size: 18px;
     font-family: 'Times New Roman', Times, serif;
@@ -113,6 +124,8 @@ main
     /* background-color: black; */
 }
 
+ 
+
 
 .book-item h5{
     margin: 2px 5px;
@@ -120,7 +133,7 @@ main
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-weight: bold;
     padding: 3px 5px;
-    color:lightblue;
+    color:lightgreen;
     background-color:#000033;
     border-radius: 5px;
     width: 250px;

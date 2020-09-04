@@ -76,7 +76,7 @@ def index():
     categories = list(map(lambda x: {'cat_name': x['name']}, menu))
     bookmarks = build_bookmarks(mydb, categories)
     # print(bookmarks)
-    return render_template('index.html', bookmarks=bookmarks, menu=menu)
+    return render_template('index-grid-css.html', bookmarks=bookmarks, menu=menu)
 
 @app.route('/view_mode', methods=['GET'])
 @login_required
@@ -130,4 +130,4 @@ for code in default_exceptions:
     app.errorhandler(code)(errorhandler)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)

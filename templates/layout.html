@@ -33,6 +33,8 @@
 
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+        <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js" defer></script>
+
         <!-- <link href="/static/styles.css" rel="stylesheet"> -->
         <link href="{{url_for('static', filename='styles.css')}}" rel="stylesheet">
         <!-- local scripts -->
@@ -187,7 +189,7 @@
             </header>
         {% endif %}
 
-        <main class="container p-5" id="main">
+        <main class="container p-4" id="main">
             <div id="modal-div"></div>
             <div id="search"></div>
             {% block main %}{% endblock %}
