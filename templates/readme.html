@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+
+{% block title %} Readme {% endblock %}
+
+{% block main %}
+<div class="readme-wrapper">
+  <div class="readme">
+    <p>This is a bookmark manager for recording web content and websites that I wrote as my final project for Harvards's CS50/2020. It supports creating, editing and deleting of bookmarks, as well a search facility for quickly finding related content around search terms.  Each user must be registered and authenticated through a username and a password.  The bookmarks can be displayed either in <strong>list</strong> or <strong>grid</strong> mode. The second mode is comprised of link preview images obtained with the free API provided by <a href="https://www.linkpreview.net/">linkpreview.net</a>. Each bookmark is comprised of a category, a url, a title and a optional description. There is also support for importing bookmarks from <em>Google Chrome</em> and <em>Microsoft Edge</em>.  The application is implemented with <em>HTML</em>, <em>CSS</em>, <em>Bootstrap</em>, <em>JavaScript</em>, <em>jQuery</em>, <em>Python</em>, <em>Flask</em> and the <em>SQlite</em> database.  You can see it live <a href="https://bkmark-mg.herokuapp.com/">here</a>.</p>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

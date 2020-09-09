@@ -69,6 +69,12 @@ Session(app)
 
 # see: https://stackoverflow.com/questions/57691525/redirects-not-working-properly-on-heroku-but-they-do-on-localhost
 
+
+@app.route('/readme', methods = ['get'])
+def readme():
+    # print('hello readme')
+    return render_template('readme.html')
+
 @app.route("/")
 @login_required
 def index():
