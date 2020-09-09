@@ -7,6 +7,7 @@ addEventListener('DOMContentLoaded', listeners);
 function listeners(){
     let input = document.querySelector('#search-input');
     let debounceTimeout = null;
+    let readme = document.querySelector('.readme');
 
     input.addEventListener('keyup', search_get);
     input.addEventListener('change', search_get);
@@ -25,6 +26,11 @@ function listeners(){
             async: true, // notice this line
             })
             .done(function(data, status, xhr){
+                if (readme){
+                    readme.innerHTML='';
+                    readme.style.padding = '0';
+                    readme.style.margin = '0';
+                }
                 document.querySelector('#search').innerHTML = data;
             })
             .fail(function(xhr, status, error){

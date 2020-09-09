@@ -72,8 +72,10 @@ Session(app)
 
 @app.route('/readme', methods = ['get'])
 def readme():
-    # print('hello readme')
-    return render_template('readme.html')
+    menu = viewMenu.catsMenu()
+    categories = list(map(lambda x: {'cat_name': x['name']}, menu))
+    bookmarks = build_bookmarks(mydb, categories)
+    return render_template('readme.html', bookmarks=bookmarks, menu=menu)
 
 @app.route("/")
 @login_required
@@ -136,4 +138,4 @@ for code in default_exceptions:
     app.errorhandler(code)(errorhandler)
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=True)
