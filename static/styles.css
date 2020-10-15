@@ -1,283 +1,276 @@
-*{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-body{
-    background-color: #160f30; 
-    background-image: url('/static/images/bernd-klutsch-unsplash-menta-1400-1400-min.jpg');
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    background-attachment: fixed;
-    height: 100vh;
+body {
+  background-color: #bdcad9;
+  background-image: linear-gradient(315deg, #bdcad9 0%, #e1dada 74%);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+  height: 100vh;
 }
 
 /* Navbar */
-.navbar{
-    position: sticky;
-    top: 5px;
-    z-index: 10;
+.navbar {
+  position: sticky;
+  top: 5px;
+  z-index: 10;
 }
-nav .navbar-brand
-{
-    /* size for brand */
-    font-size: x-large;
-}
-
-.flashed{
-    position: sticky;
-    top: 5em;
-    z-index: 5;
+nav .navbar-brand {
+  /* size for brand */
+  font-size: x-large;
 }
 
-.flashed .alert{
-    color: black;
-    font-variant: small-caps;
-    font-weight: bold;
+.flashed {
+  position: sticky;
+  top: 5em;
+  z-index: 5;
 }
 
-.navbar-custom .dropdown-menu{
-    background-color:#200f21;
+.flashed .alert {
+  color: black;
+  font-variant: small-caps;
+  font-weight: bold;
+}
+
+.navbar-custom .dropdown-menu {
+  background-color: #200f21;
 }
 
 /* see: https://stackoverflow.com/questions/18529274/change-navbar-color-in-twitter-bootstrap */
-.navbar-custom{
-    background-color:#200f21;
+.navbar-custom {
+  background-color: #200f21;
 }
 
 .navbar-custom .navbar-brand,
 .navbar-custom .navbar-text {
-    color: wheat;
-} 
+  color: wheat;
+}
 
 /* see:https://stackoverflow.com/questions/42586729/bootstrap-4-change-hamburger-toggler-color */
 .navbar-custom .navbar-toggler-icon {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 216, 255, 0.9)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
-    }
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 216, 255, 0.9)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
 /* change the link color */
 .navbar-custom .navbar-nav .nav-link {
-    color: wheat;
+  color: wheat;
 }
 /* change the color of active or hovered links */
 .navbar-custom .nav-item.active .nav-link,
 .navbar-custom .nav-item:hover .nav-link {
-    color: lightsteelblue;
+  color: lightsteelblue;
 }
 
-@media screen and (min-width: 700px){
-    nav li > a{
-      font-size: 18px;
-    }
+@media screen and (min-width: 700px) {
+  nav li > a {
+    font-size: 18px;
   }
+}
 
 /* Global Settings */
 
 /* center button */
-#btn-chg{
-    display: block;
-    margin: 0 auto;
+#btn-chg {
+  display: block;
+  margin: 0 auto;
 }
-
 
 /* Forms */
 
-.form-group select{
-    background-color:#200f21 !important;
+.form-group select {
+  background-color: #200f21 !important;
 }
 
 /* .resources in: index.html, search.html,  */
 
-.float-grid > .book-item{
-    float: left;
-}
- 
-
-.grid-container{
-    display: grid;
+.float-grid > .book-item {
+  float: left;
 }
 
-.grid-box{
-    width:90%;
-    margin: 20px auto;
-}
- 
-.resources{
-    font-size: 18px;
-    font-family: 'Times New Roman', Times, serif;
-    list-style-type: none;
-    margin: 0;
-    padding: 0px 5px 8px 5px;
-    /* background-color: black; */
+.grid-container {
+  display: grid;
 }
 
-
-.book-item h5{
-    margin: 2px 5px;
-    font-variant: small-caps;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-weight: bold;
-    padding: 3px 5px;
-    color:lightgreen;
-    background-color:#000033;
-    border-radius: 5px;
-    width: 250px;
+.grid-box {
+  width: 90%;
+  margin: 20px auto;
 }
 
-.resources li a{
-    display: inline-block;
-    text-decoration: none;
-    color: whitesmoke;
-    background-color:#000033;
-    font-size: 17px;
-    font-family: 'Nanum Gothic', sans-serif; /* 'Open Sans Condensed', sans-serif;*/
-    padding: 1px 6px;
-    width: 250px;
-    font-variant: small-caps;
-    margin:5px 0px;
-    border-radius: 5px;
+.resources {
+  font-size: 18px;
+  font-family: "Times New Roman", Times, serif;
+  list-style-type: none;
+  margin: 0;
+  padding: 0px 5px 8px 5px;
+  /* background-color: black; */
+}
+
+.book-item h5 {
+  margin: 2px 5px;
+  font-variant: small-caps;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-weight: bold;
+  padding: 3px 5px;
+  color: lightgreen;
+  background-color: #000033;
+  border-radius: 5px;
+  width: 250px;
+}
+
+.resources li a {
+  display: inline-block;
+  text-decoration: none;
+  color: whitesmoke;
+  background-color: #000033;
+  font-size: 17px;
+  font-family: "Nanum Gothic", sans-serif; /* 'Open Sans Condensed', sans-serif;*/
+  padding: 1px 6px;
+  width: 250px;
+  font-variant: small-caps;
+  margin: 5px 0px;
+  border-radius: 5px;
 }
 
 .edit-container .resources li a,
-.remove-container .resources li a
- {
-    color: lightgreen;
+.remove-container .resources li a {
+  color: lightgreen;
 }
 
 /* see: https://css-tricks.com/snippets/html/glyphs/ */
-.resources li a::before{
-    content: '\2329';
-    padding-right: 2px;
+.resources li a::before {
+  content: "\2329";
+  padding-right: 2px;
 }
 
-.resources li a::after{
-    content: '\232a';
-    padding-left: 2px;
+.resources li a::after {
+  content: "\232a";
+  padding-left: 2px;
 }
 
-.resources li a:hover{
-    color: black;
-    background-color: whitesmoke;
+.resources li a:hover {
+  color: black;
+  background-color: whitesmoke;
 }
 
 /* Tooltips */
 
-.tooltip-inner{
-    font-size: 14px;
-    white-space: pre-wrap;
-    text-align: justify;
-} 
+.tooltip-inner {
+  font-size: 14px;
+  white-space: pre-wrap;
+  text-align: justify;
+}
 
 /* View Menu */
 
-.view-hide{
-    padding-left: 50px ;
+.view-hide {
+  padding-left: 50px;
 }
 /* see: https://css-tricks.com/snippets/html/glyphs/ */
 
-.mode-view{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
+.mode-view {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
 }
 
-.status{
-    padding-right: 10px;
+.status {
+  padding-right: 10px;
 }
 
-.dropdown-menu{
-    background-color:#200f21 !important;
+.dropdown-menu {
+  background-color: #200f21 !important;
 }
 
-.dropdown-menu .dropdown-item:hover{
-    color: #200f21 !important;
-    background-color: whitesmoke !important;
+.dropdown-menu .dropdown-item:hover {
+  color: #200f21 !important;
+  background-color: whitesmoke !important;
 }
 
 /* Grid View */
 
-.wrapper-box{
-    color: whitesmoke;
-    display: flex;
-    flex-direction: column;
-    justify-content:center;
-    margin-bottom: 20px;
+.wrapper-box {
+  color: whitesmoke;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
-.wrapper-item{
-    border: 1px solid black;
+.wrapper-item {
+  border: 1px solid black;
 }
 
-
-.wrapper-btn, 
-.wrapper-btn a{
-    color: whitesmoke;
-    background-color:#000033;
-    text-align: center;
-    border-radius: 10px;
+.wrapper-btn,
+.wrapper-btn a {
+  color: whitesmoke;
+  background-color: #000033;
+  text-align: center;
+  border-radius: 10px;
 }
 
 .wrapper-btn:hover,
-.wrapper-btn:hover a{
-    background-color: darkslategray;
-    color: whitesmoke;
+.wrapper-btn:hover a {
+  background-color: darkslategray;
+  color: whitesmoke;
 }
 
-.wrapper-img{
-    height:230px;
-    border: 1px solid black;
+.wrapper-img {
+  height: 230px;
+  border: 1px solid black;
 }
-.wrapper-box img{
-    width:100%; 
-    height: 100%;
-    object-fit: cover;
+.wrapper-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* Import */
 
-.spinner{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+.spinner {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 /* Readme */
 
-.readme-wrapper{
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-    margin-top: 40px;
+.readme-wrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  margin-top: 40px;
 }
 
-.readme{
-    background-color: whitesmoke;
-    color: black;
-    padding: 10px 20px;
-    font-family: Arial, Helvetica, sans-serif;
-    text-align: justify;
-    width: 50%;
+.readme {
+  background-color: whitesmoke;
+  color: black;
+  padding: 10px 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: justify;
+  width: 50%;
 }
 
 /* Media queries */
 
-@media (min-width:1023px){
-    .grid-box{
-        margin-right:-50px;
-    }
+@media (min-width: 1023px) {
+  .grid-box {
+    margin-right: -50px;
+  }
 }
 
-@media (max-width:500px){
-    .grid-box{
-        margin-right:15px;
-    }
+@media (max-width: 500px) {
+  .grid-box {
+    margin-right: 15px;
+  }
 }
 
-@media (max-width:768px){
-    .readme{
-        width: 80%;
-    }
+@media (max-width: 768px) {
+  .readme {
+    width: 80%;
+  }
 }
-
