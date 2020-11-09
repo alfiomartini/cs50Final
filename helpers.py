@@ -17,6 +17,7 @@ def shorten_title(name, size):
         short += '...'
     return short
 
+
 def apology(message):
     return render_template("apology.html", message=message)
 
@@ -35,18 +36,21 @@ def login_required(f):
         return f(*args, **kwargs)
     return wrapper
 
+
 def getImage(img_url):
     try:
-        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36'}
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36'}
         resp = requests.get(img_url, headers=headers)
         image = Image.open(BytesIO(resp.content))
     except:
-        image = None 
+        image = None
 
     return image
 
+
 def getImageLink(url):
-  
+
     # Contact API
     try:
         api_key = os.environ.get("LINK_PREVIEW_KEY")
@@ -63,43 +67,52 @@ def getImageLink(url):
         img_url = img_preview['image']
         return img_url
 
+
 def saveImage(img_url):
     image = getImage(img_url)
     if image:
         url_obj = urlparse(img_url)
         img_name = url_obj.netloc + url_obj.path
-        img_name = img_name.replace("/", "_")  
+        img_name = img_name.replace("/", "_")
         img_name = img_name.replace('*', '_')
-        image.save(f'static/preview/{img_name}') 
+        image.save(f'static/preview/{img_name}')
         return img_name
     else:
         img_name = None
     return img_name
 
+
 def urlImage(db, url):
     entry = db.execute('select url, image from images where url = ?', (url,))
-    print('entry length', len(entry))
+    # print('entry length', len(entry))
     img_url = getImageLink(url)
     if img_url:
         img_name = saveImage(img_url)
         if img_name:
             if len(entry) == 0:
-                db.execute('insert into images(url, image) values(?,?)', (url, img_name))
+                db.execute(
+                    'insert into images(url, image) values(?,?)', (url, img_name))
             else:
-                db.execute('update images set url = ?, image = ? where url = ?', (url, img_name,url))
+                db.execute(
+                    'update images set url = ?, image = ? where url = ?', (url, img_name, url))
         else:
             # print('else saveImage')
-            img_name = 'bm-small.png' #default_image 
+            img_name = 'bm-small.png'  # default_image
             if len(entry) == 0:
-                db.execute('insert into images(url, image) values(?,?)', (url, img_name))
+                db.execute(
+                    'insert into images(url, image) values(?,?)', (url, img_name))
             else:
-                db.execute('update images set url = ?, image = ? where url = ?', (url, img_name,url))
-    else: 
-        img_name = 'bm-small.png' #default_image 
+                db.execute(
+                    'update images set url = ?, image = ? where url = ?', (url, img_name, url))
+    else:
+        img_name = 'bm-small.png'  # default_image
         if len(entry) == 0:
-            db.execute('insert into images(url, image) values(?,?)', (url, img_name))
+            db.execute('insert into images(url, image) values(?,?)',
+                       (url, img_name))
         else:
-            db.execute('update images set url = ?, image = ? where url = ?', (url, img_name,url))
+            db.execute(
+                'update images set url = ?, image = ? where url = ?', (url, img_name, url))
+
 
 def processURL(dict):
     bm = {}
@@ -109,16 +122,16 @@ def processURL(dict):
     bm['description'] = 'Not given.'
     return bm
 
+
 def processFolder(folder):
     category = folder['name']
     bookmarks = []
     for bm_child in folder['children']:
         if bm_child['type'] == 'url':
-            bm={}
+            bm = {}
             bm['category'] = category
             bm['title'] = bm_child['name']
             bm['url'] = bm_child['url']
             bm['description'] = 'Not given.'
             bookmarks.append(bm)
     return bookmarks
-
